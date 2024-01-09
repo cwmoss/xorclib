@@ -1,7 +1,7 @@
 <?php
 
-include_once("xorc/db/xorcstore_migration.class.php");
-include_once("xorc/db/xorcstore_connector.class.php");
+include_once(XORC_LIB_PATH . "/db/xorcstore_migration.class.php");
+include_once(XORC_LIB_PATH . "/db/xorcstore_connector.class.php");
 
 $command = $margs[0];
 
@@ -59,7 +59,7 @@ if ($command == "dump" || $command == "dumpdata" || $command == "dumpdatacsv") {
    $m->session_table();
 } elseif ($command == 'new') {
 
-   include_once("xorc/bin/scripts/_genlib.php");
+   include_once(__DIR__ . "/_genlib.php");
 
    $title = $margs[1];
    $title = preg_replace("/[^-_a-z0-9]/", "", $title);
