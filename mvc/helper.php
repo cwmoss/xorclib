@@ -1,5 +1,5 @@
 <?php
-require_once(__DIR__ . "/mvc/formtag_helper.php");
+require_once(__DIR__ . "/formtag_helper.php");
 
 function url($to = "", $parms = array()) {
    //	print ("URL:$to"); print_r(XorcApp::$inst);
