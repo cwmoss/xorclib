@@ -111,7 +111,7 @@ class Xorc {
 		//       return;
 		//    }
 		define('ADODB_ASSOC_CASE', 0);
-		include_once(XORC_LIB_PATH . "/db/xorcstore_connector.class.php");
+		include_once(__DIR__ . "/db/xorcstore_connector.class.php");
 		if (!$dsn) {
 			$this->connect_db_section('db');
 		} else {

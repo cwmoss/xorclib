@@ -1,5 +1,5 @@
 <?php
-include_once("xorc/mvc/formtag_helper.php");
+require_once(__DIR__ . "/mvc/formtag_helper.php");
 
 function url($to = "", $parms = array()) {
    //	print ("URL:$to"); print_r(XorcApp::$inst);
@@ -340,9 +340,9 @@ function client_is_ie() {
 # compat old prototype stuff
 
 if (!defined("XORC_JS_JQUERY")) {
-   include_once("xorc_helper_prototype.php");
+   include_once(__DIR__ . "/xorc_helper_prototype.php");
 } else {
-   include_once("xorc_helper_jquery.php");
+   include_once(__DIR__ . "/xorc_helper_jquery.php");
 }
 
 ###

@@ -11,16 +11,16 @@
  * @package xorc
  **/
 
-require_once("mvc/xorc_request.class.php");
-require_once("mvc/xorc_response.class.php");
-require_once("mvc/xorc_router.class.php");
-require_once("mvc/xorc_env.class.php");
-require_once("mvc/xorc_controller.class.php");
-require_once("mvc/xorc_view.class.php");
-require_once("mvc/helper.php");
+require_once(__DIR__ . "/mvc/xorc_request.class.php");
+require_once(__DIR__ . "/mvc/xorc_response.class.php");
+require_once(__DIR__ . "/mvc/xorc_router.class.php");
+require_once(__DIR__ . "/mvc/xorc_env.class.php");
+require_once(__DIR__ . "/mvc/xorc_controller.class.php");
+require_once(__DIR__ . "/mvc/xorc_view.class.php");
+require_once(__DIR__ . "/mvc/helper.php");
 // require_once("mvc/error.php");
-require_once("mvc/xorc_exception.class.php");
-require_once("xorc.class.php");
+require_once(__DIR__ . "/mvc/xorc_exception.class.php");
+require_once(__DIR__ . "/xorc.class.php");
 if (!defined('XORCAPP_NODISPATCH')) define('XORCAPP_NODISPATCH', false);
 # print memory_get_usage()."\n";
 
@@ -390,7 +390,7 @@ class xorcapp extends Xorc {
 		if ($this->auth) return $this->auth;
 		#		$this->log("AUTH START CONTINUED");
 
-		include_once(XORC_LIB_PATH . "/mvc/xorc_auth.class.php");
+		include_once(__DIR__ . "/mvc/xorc_auth.class.php");
 		if ($this->conf['auth']['controller']) {
 			$path = dirname((string) $this->conf['auth']['controller']);
 			#			$this->log("CUSTOM CONTROLLER ".$this->conf['auth']['controller']);
