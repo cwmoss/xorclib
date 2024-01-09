@@ -1,0 +1,80 @@
+@@@ general @@@
+
+<div class="frow {row_class} ">
+	<label for="{id}" class="col-sm-3 control-label">{label}</label>
+	<div class="col-sm-9"><div class="">{form}{if append_field}<span class="input-group-addon">{append_field}</span>{/if append_field}</div></div>
+	{append_html}
+	<div class="err-field col-sm-9 col-sm-offset-3">{if error}<label id="{id}-error" class="error" for="{id}">{error}</label>{/if error}</div>
+</div>
+
+@@@ display @@@
+
+<div class="form-group">
+  <label class="col-sm-2 control-label">{label}</label>
+  <div class="col-sm-3"><p class="form-control-static">{form}</p></div>
+	{append_html}
+</div>
+
+@@@ display2 @@@
+
+<div class="frow form-group">
+	<div class="col-sm-2">
+		<div class="xlabel">{label}</div>
+    </div>
+    <div class="col-sm-3 {form_class}">{form}</div>{append_html}
+</div>
+
+@@@ xxtextarea @@@
+
+<div class="{row_class}">
+	<label for="{id}" class="col-3 control-label">{label}</label>
+	<div class="col-12">{form}{append_field}</div>
+</div>
+
+
+@@@ checkbox @@@
+
+<div class="frow {row_class}">
+	<div class="col-sm-offset-3 col-sm-9">
+      <div class="checkbox">
+        <label>
+          {form} {label}	
+        </label>
+		<div class="err-field">{if error}<label id="{id}-error" class="error" for="{id}">{error}</label>{/if error}</div>
+      </div>
+   </div>
+</div>
+
+@@@ radiosxxx @@@
+
+<label class="radio-inline">
+  <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1"> 1
+</label>
+
+@@@ phone @@@
+
+<div class="frow {row_class} input-group">
+	<label for="{id}" class="col-3 control-label">{label}</label>
+<div class="row">
+  <div class="col-7">
+	<div class="input-group input-group">{form1}{form2}{form3}{if actions}<span class="input-group-addon">{actions}</span>{/if actions}</div>
+  </div>
+</div>
+</div>
+
+@@@ multi2 @@@
+
+<div class="frow {row_class}">
+	<label for="{id1}" class="col-sm-3 control-label">{label}</label>
+<div class="col-sm-9"><div class="input-group input-group">
+  	
+   {form1}
+
+   {form2}
+
+	<div class="err-field">
+		{if error1}<label id="{id1}-error" class="error" for="{id1}">{error1}</label>{/if error1}
+		{if error2}<label id="{id2}-error" class="error" for="{id2}">{error2}</label>{/if error2}
+	</div>
+</div></div>
+</div>

@@ -1,0 +1,14 @@
+subject: <?=$contest->title?> // Registrierung abschließen
+
+Hallo <?=$u->name?>,  
+    
+vielen Dank für Deine Anmeldung zum Fotowettbewerb "<?=$contest->title?>".
+Um die Registrierung zu bestätigen und Deinen Zugang zu aktivieren, klick bitte auf den folgenden Link:  
+<?=url('register/confirm', array('+'=>'', 'e'=>$u->email))?>&t=<?=$u->token?>
+
+Falls Du Probleme mit dem Link hast, z.B. weil Dein E-Mail Programm Zeilenumbrüche eingefügt hat, kannst Du den Freischaltcode auch von Hand auf der Webseite eingeben.  
+Freischaltcode: <?=$u->token?>  
+
+Wenn Du nicht am Fotowettbewerb teilnehmen möchtest und keine Registrierung vorgenommen hast, ignoriere diese Nachricht einfach.
+
+Bitte leite diese E-Mail aus Sicherheitsgründen an niemanden weiter.

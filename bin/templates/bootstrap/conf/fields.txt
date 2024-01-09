@@ -1,0 +1,36 @@
+== user
+
+email E-Mail-Adresse
+uname Benutzername
+passwd Passwort
+passwd_confirmation "Passwort wiederholen"
+passwd_old "Bisheriges Passwort"
+reminder_email "E-Mail-Adresse"
+status Status ref:userstatus
+role Rolle ref:userroles
+
+title Anrede ref:title
+age Alter
+fname Vorname
+lname Nachname
+street Straße
+number Hausnummer
+postalcode PLZ
+city Ort
+country Land ref:countries
+
+toc "Ja, Ich akzeptiere die Teilnahmebedingungen."
+token "Freischaltcode"
+token_expires_at "Freischaltcode läuft ab am"
+confirmed_at "Bestätigt am"
+login_at "Letzter Login"
+login_from "Letzte Login IP"
+login_count "Anzahl Logins"
+
+
+
+== app_login
+
+usr E-Mail-Adresse
+pwd Passwort
+

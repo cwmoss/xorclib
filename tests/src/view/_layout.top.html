@@ -1,0 +1,49 @@
+<?php
+
+$APP_NAV=array(
+	"account" => "accounts",
+	"author" => "authors",
+	"auto_id_test" => "auto_id_tests",
+	"binary" => "binaries",
+	"booleantest" => "booleantests",
+	"category" => "categories",
+	"categories_post" => "categories_posts",
+	"colnametest" => "colnametests",
+	"comment" => "comments",
+	"company" => "companies",
+	"computer" => "computers",
+	"customer" => "customers",
+	"developer" => "developers",
+	"developers_project" => "developers_projects",
+	"entrant" => "entrants",
+	"fk_test_has_pk" => "fk_test_has_pk",
+	"funny_joke" => "funny_jokes",
+	"keyboard" => "keyboards",
+	"legacy_thing" => "legacy_things",
+	"mixin" => "mixins",
+	"movie" => "movies",
+	"order" => "orders",
+	"person" => "people",
+	"post" => "posts",
+	"project" => "projects",
+	"reader" => "readers",
+	"subscriber" => "subscribers",
+	"task" => "tasks",
+	"topic" => "topics",
+
+//xOrCgeN:	%next-nav-element%
+);
+
+print("<div id=\"navcontainer\">\n\t<ul id=\"navlist\">");
+foreach($APP_NAV as $url=>$descr){
+	$licss=$acss="";
+	if($url==$navpoint){
+		$licss=' id="active"';
+		$acss=' id="current"';
+	}
+	printf('<li%s><a href="%s"%s>%s</a></li>',
+		$licss, url("$url/index"), $acss, $descr);
+}
+print("</ul>\n</div>\n\n");
+
+?>

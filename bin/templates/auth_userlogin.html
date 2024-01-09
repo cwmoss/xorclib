@@ -1,0 +1,44 @@
+<h4>Hochladen. Anschauen. Weitersagen.</h4>
+
+<p>Damit Sie Videos hochladen und Anschauen können müssen Sie sich einloggen.</p>
+
+<?/*
+<p>Falls Sie sich noch nicht angemeldet haben, tun Sie das bitte <a href="<?=url("register/index")?>">hier</a></p>
+*/?>
+
+<div id="vq">	
+<form action="<?=url()?>" method="post">
+<table border="0" align="center" id="vqtab">
+<tr><td colspan="2"><strong><?=$msg?></strong></td></tr>
+<tr>
+  <td align="right">EMailadresse</td><td><input type="Text" name="xorcuser" size="25" maxlength="255" value=""></td>
+</tr>
+<tr>
+	<td align="right">Passwort</td><td><input type="password" name="xorcpass" size="25" maxlength="64" value=""></td>
+</tr>
+
+<?php if($conf['allow_rememberme']){ ?>
+
+<tr><td></td><td><input type="checkbox" name="xorcrememberme"><i>Remember me?</i></td></tr>
+
+<?php } ?>
+
+<tr>
+	<td></td>
+	<td><input type="Submit" name="post" value="Einloggen!" class="sbutton"></td>
+</tr>
+
+<?if(false){?>
+<tr>
+
+	<td colspan="2"><strong><a href="<?=url("register/index")?>">Ich bin neu und möchte mich anmelden.</a></strong></td>
+</tr>
+
+<tr>
+
+	<td colspan="2"><a href="<?=url("register/reminder")?>">Ich habe mein Passwort vergessen.</a></td>
+</tr>
+<?}?>
+</table>
+</form>
+</div>

@@ -1,0 +1,47 @@
+<? 
+//$add_to_params -> array mit zusätlichen werten die bei jedem Aufruf mitgegeben werden
+//$pagevar -> welcher parameter zeigt die seitennummer an
+if(!@$pagevar) $pagevar="id";
+if(!@$pager_url)$pager_url = '';
+
+$params = array($pagevar=>'1');
+if(@$add_to_params)$params = array_merge($add_to_params,$params);
+
+$slide=4; 
+if($slide){
+	$start=$pager['this']-$slide;
+	if($start<1) $start=1;
+	$end=$pager['this']+$slide;
+	if($end>$pager['totalpages']) $end=$pager['totalpages'];
+}else{
+	$start=1; $end=$pager['totalpages'];
+}
+?>
+<div class="pager">
+		<div class="descr"><?=count_variant($pager['total'], "keine Einträge", "1 Eintrag", "%s Einträge")?>
+			<?if($pager['totalpages'] > 1){?>
+			 - Seite <?=$pager['this']?> von <?=$pager['totalpages']?></div>
+		<div class="arrow"><a href="<?=url($pager_url, $params)?>">&lt;&lt;</a></div>
+		<? if($pager['less']){
+			$params[$pagevar]=$pager['prev'];  ?>
+			<div class="arrow"><a href="<?=url($pager_url, $params)?>">&lt;</a></div>
+		<? }else{ ?>
+			<div class="noarrow">&lt;</div>
+		<? } ?>
+		<? for($i=$start; $i<=$end; $i++){
+			$act=($i==$pager['this'])?' class="number act"':'class="number"';
+			$params[$pagevar]=$i;?>
+			<div <?=$act?>><a href="<?=url($pager_url, $params)?>"><?=$i?></a></div>
+		<? } ?>
+		<? if($pager['more']){
+			$params[$pagevar]=$pager['next'];  ?>
+			<div class="arrow"><a href="<?=url($pager_url, $params)?>">&gt;</a></div>
+		<? }else{ ?>
+			<div class="noarrow">&gt;</div>
+		<? }
+		$params[$pagevar]=$pager['totalpages'];  ?>
+		<div class="arrow"><a href="<?=url($pager_url, $params)?>">&gt;&gt;</a></div>
+		<?}else{?>
+			</div>
+		<?}?>
+</div><div class="spacer">&nbsp;</div>

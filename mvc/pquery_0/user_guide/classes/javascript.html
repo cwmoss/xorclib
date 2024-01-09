@@ -1,0 +1,92 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+
+<title>PQuery User Guide</title>
+
+<style type='text/css' media='all'>@import url('../userguide.css');</style>
+<link rel='stylesheet' type='text/css' media='all' href='userguide.css' />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv='expires' content='-1' />
+<meta http-equiv= 'pragma' content='no-cache' />
+<meta name='robots' content='all' />
+<meta name='author' content='Vikas Patial' />
+<meta name='description' content='PQuery User Guide' />
+
+</head>
+<body>
+
+<!-- START NAVIGATION -->
+<div id="masthead">
+<table cellpadding="0" cellspacing="0" border="0" style="width:100%">
+<tr>
+<td><h1>PQuery  Version 0.1</h1></td>
+<td id="breadcrumb_right"><a name="top"></a><a href="../toc.html">Full Table of Contents</a></td>
+</tr>
+</table>
+</div>
+<!-- END NAVIGATION -->
+
+<table cellpadding="0" cellspacing="0" border="0" style="width:100%">
+<tr>
+<td id="breadcrumb">
+<a href="http://www.ngcoders.com/pquery/">PQuery  Home</a> &nbsp;&#8250;&nbsp; 
+<a href="../index.html">User Guide Home</a> &nbsp;&#8250;&nbsp;
+Javascript Class
+</td>
+<td id="searchbox"><form method="get" action="http://www.google.com/search"><input type="hidden" name="as_sitesearch" id="as_sitesearch" value="www.ngcoders.com/pquery/" />Search User Guide&nbsp; <input type="text" class="input" style="width:200px;" name="q" id="q" size="31" maxlength="255" value="" />&nbsp;<input type="submit" class="submit" name="sa" value="Go" /></form></td>
+</tr>
+</table>
+<br clear="all" />
+
+
+<!-- START CONTENT -->
+<div id="content">
+
+<h1>JavaScript Class</h1>
+<p>Provides functionality for working with JavaScript.All members are to be called though the PQuery class only. </p>
+
+
+<h2>button_to_function(<var>$name</var>,<var>$function=null</var>)</h2>
+<p>
+Returns a link that’ll trigger a JavaScript function using the onclick handler.</p>
+<p>
+Example :
+<code>button_to_function('Greetigs', 'alert("Hello world!")' );</code>
+</p>
+
+<h2>escape(<var>$javascript</var>)</h2>
+<p>Escape carrier returns and single and double quotes for JavaScript segments.</p>
+
+<h2>tag(<var>$content</var>)</h2>
+<p>Returns a JavaScript tag with the content inside.</p>
+<p>Example :
+<code>tag('alert("All is good")');</code>
+</p>
+
+<h2>link_to_function(<var>$name</var>,<var>$function</var>,<var>$html_options=null</var>)</h2>
+<p>Returns a link that’ll trigger a JavaScript function using the onclick handler and return false after the fact.</p>
+<p>Example :
+<code>link_to_function("Greeting","alert('Hello world!')");</code>
+</p>
+
+
+
+</div>
+<!-- END CONTENT -->
+
+
+
+
+<!-- END CONTENT -->
+<div id="footer">
+<p><a href="#top">Top of Page</a><p>
+<p><a href="http://www.ngcoders.com/pquery/">PQuery </a> &nbsp;&middot;&nbsp; Copyright &#169; 2006 &nbsp;&middot;&nbsp; <a href="http://www.ngcoders.com">NGCoders</a></p>
+</div>
+
+
+
+</body>
+</html>
+
+

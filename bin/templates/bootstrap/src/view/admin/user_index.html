@@ -1,0 +1,52 @@
+
+<div><?=link_to("create", "User anlegen", null, array("class"=>"btn btn-primary"))?></div>
+
+<form action="<?=url('index')?>"><?=text_field_tag('q', $q)?> <?=submit_tag("search", "Suchen", array('class'=>'btn btn-primary'))?></form>
+
+<?=render_part('pager', array('pager'=>$pager))?>
+
+<table class="table table-condensed table-striped">
+	<thead><tr>
+			<th></th>
+					<th>Benutzername</th>
+					<th>E-Mail</th>
+					
+					<th>Vorname</th>
+					<th>Nachname</th>				
+
+					<th>Status/ Rolle</th>
+
+					<th>Alter</th>
+					
+					<th>Adresse</th>
+
+					<th>Bestätigt/ Registriert</th>
+					<th>Logins</th>
+
+		</tr>
+	</thead>
+	<tbody>
+<? foreach($items as $user){
+	$c++;	$css=($c % 2)?"odd":"even";
+?>
+<tr class="<?=$css?>">
+	<td><?=link_to("edit", "bearbeiten", $user->id)?></td>
+	<td><?=$user->uname?></td>
+	<td><?=$user->email?></td>
+	<td><?=$user->fname?></td>
+	<td><?=$user->lname?></td>
+	
+	<td><?=$user->status?> / <?=$user->role?$user->role:'usr'?></td>
+
+	<td><?=$user->age?></td>
+	<td><?=$user->street?> <?=$user->number?><br><?=$user->postalcode?> <?=$user->city?></td>
+
+	<td><?=dat($user->confirmed_at)?><br><?=dat($user->created_at)?></td>
+	<td><?=dat($user->login_at)?> (<?=$user->login_count?>)</td>
+
+</tr>
+<? } ?>
+	</tbody>
+</table>
+
+<?=render_part('pager', array('pager'=>$pager))?>

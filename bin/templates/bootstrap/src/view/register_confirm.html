@@ -1,0 +1,22 @@
+<h4>Freischaltung Ihrer Registrierung</h4>
+
+<?php $f = new Xorc_objectform($registration, 'reg', array("autoid"=>true)); ?>
+
+<?=$f->error_messages()?>
+
+<?=$f->start("confirm", array("class"=>"form-horizontal", 'id'=>'reg'))?>
+
+	<?=row($f, "token")?>
+	
+	<?=row($f, "email")?>
+	
+<fieldset class="btn-group action">
+
+	<?=submit_tag("save", "Freischaltcode abschicken", array('class'=>'btn btn-primary'))?>
+
+
+</fieldset>
+	
+<?=end_form_tag()?>
+
+<?=render_part('validation', array('form'=>$f))?>

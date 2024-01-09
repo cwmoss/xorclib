@@ -1,0 +1,16 @@
+<table class="zeta">
+<? while($customer=$list->next()){
+	$c++;	$css=($c % 2)?"odd":"even";
+?>
+<tr class="<?=$css?>">
+	<td><?=link_to("edit", "edit", $customer->prop['id'])?></td>
+	<td><?=$customer->prop['name']?></td>
+	<td><?=$customer->prop['balance']?></td>
+	<td><?=$customer->prop['address_street']?></td>
+	<td><?=$customer->prop['address_city']?></td>
+	<td><?=$customer->prop['address_country']?></td>
+	<td><?=$customer->prop['gps_location']?></td>
+
+</tr>
+<? } ?>
+</table>

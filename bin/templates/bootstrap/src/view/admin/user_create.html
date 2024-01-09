@@ -1,0 +1,17 @@
+<h3>User anlegen</h3>
+
+<?php $f = new Xorc_objectform($euser, 'user', array("autoid"=>true)); ?>
+
+<?=$f->error_messages()?>
+
+<?=$f->start("save", array("class"=>"form-horizontal"))?>
+
+	<?=render_part('user_form', array("f"=>$f))?>
+
+<fieldset class="action">
+
+	<?=submit_tag("create", "Speichern", array('class'=>'btn btn-primary'))?><?=link_to('index', "Zurück", array(), array("class"=>"btn btn-default"));?>
+
+</fieldset>
+
+<?=end_form_tag()?>

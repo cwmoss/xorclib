@@ -1,0 +1,11 @@
+<table class="zeta">
+<? while($movie=$list->next()){
+	$c++;	$css=($c % 2)?"odd":"even";
+?>
+<tr class="<?=$css?>">
+	<td><?=link_to("edit", "edit", $movie->prop['movieid'])?></td>
+	<td><?=$movie->prop['name']?></td>
+
+</tr>
+<? } ?>
+</table>

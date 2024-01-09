@@ -1,0 +1,13 @@
+<table class="zeta">
+<? while($order=$list->next()){
+	$c++;	$css=($c % 2)?"odd":"even";
+?>
+<tr class="<?=$css?>">
+	<td><?=link_to("edit", "edit", $order->prop['id'])?></td>
+	<td><?=$order->prop['name']?></td>
+	<td><?=$order->prop['billing_customer_id']?></td>
+	<td><?=$order->prop['shipping_customer_id']?></td>
+
+</tr>
+<? } ?>
+</table>

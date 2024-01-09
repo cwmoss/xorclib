@@ -1,0 +1,25 @@
+{
+  "name": "super8",
+  "version": "1.0.0",
+  "description": "super8 website",
+  "private": true,
+  "main": "index.php",
+  "scripts": {
+    "test": "test"
+  },
+  "author": "ae",
+  "license": "ISC",
+  "devDependencies": {
+    "grunt": "^1.0.1",
+    "grunt-contrib-concat": "^1.0.1",
+    "grunt-contrib-cssmin": "latest",
+    "grunt-contrib-sass": "^1.0.0",
+    "grunt-contrib-uglify": "^2.0.0",
+    "grunt-contrib-watch": "^1.0.0"
+  },
+  "dependencies": {
+    "@vimeo/player": "^2.1.0",
+    "bootstrap-sass": "^3.3.7",
+    "jquery": "^3.2.1"
+  }
+}

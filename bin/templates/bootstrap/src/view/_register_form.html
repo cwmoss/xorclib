@@ -1,0 +1,33 @@
+<fieldset class="even">
+		
+		<?=row($f, "email")?>
+		
+		<?=row($f, "passwd", 'password', array('autocomplete'=>"off"))?>
+		
+		<?=row($f, "passwd_confirmation", 'password')?>
+		
+</fieldset>
+<fieldset class="odd">
+		
+		<div class="row">
+			<div class="col-sm-9 col-sm-offset-3">
+				<?=txt('user')?>
+			</div>
+		</div>
+		
+		<?=row($f, "uname", array('autocomplete'=>"off"))?>
+		
+		<?=row($f, "age")?>
+		
+		<?=row($f, "fname")?>
+		<?=row($f, "lname")?>
+
+		<?=row($f, ["street", "number"], 'text', ['label'=>'Straße, Hnr.'])?>
+		<?#=row($f, "number")?>
+		<?=row($f, ["postalcode", "city"], null, ['label'=>'PLZ, Ort'])?>
+
+		<?=row($f, "country", 'selectbox')?>
+
+		<?=row($f, "toc", 'checkbox', ['label'=>'Ja, Ich akzeptiere die '.link_to('page/view', 'Teilnahmebedingungen', 'regeln').'.'])?>
+		
+</fieldset>

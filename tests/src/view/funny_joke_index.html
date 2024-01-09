@@ -1,0 +1,11 @@
+<table class="zeta">
+<? while($funny_joke=$list->next()){
+	$c++;	$css=($c % 2)?"odd":"even";
+?>
+<tr class="<?=$css?>">
+	<td><?=link_to("edit", "edit", $funny_joke->prop['id'])?></td>
+	<td><?=$funny_joke->prop['name']?></td>
+
+</tr>
+<? } ?>
+</table>

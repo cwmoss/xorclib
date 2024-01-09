@@ -1,0 +1,16 @@
+RewriteEngine On
+
+# we skip all files with .something
+RewriteCond %{REQUEST_URI} \..+$
+RewriteRule .* - [L]
+
+# we check if the .html version is here (caching)
+RewriteRule ^$ index.html [QSA]
+RewriteRule ^([^.]+)$ $1.html [QSA]
+RewriteCond %{REQUEST_FILENAME} !-f
+
+# if no rule matched the url, we redirect to our front web controller
+RewriteRule ^(.*)$ index.php [QSA,L]
+
+# big crash from our front web controller
+ErrorDocument 500 "<h2>Application error</h2>application failed to start properly"

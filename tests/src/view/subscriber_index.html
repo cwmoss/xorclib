@@ -1,0 +1,11 @@
+<table class="zeta">
+<? while($subscriber=$list->next()){
+	$c++;	$css=($c % 2)?"odd":"even";
+?>
+<tr class="<?=$css?>">
+	<td><?=link_to("edit", "edit", $subscriber->prop['nick'])?></td>
+	<td><?=$subscriber->prop['name']?></td>
+
+</tr>
+<? } ?>
+</table>

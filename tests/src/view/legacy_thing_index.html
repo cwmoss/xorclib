@@ -1,0 +1,12 @@
+<table class="zeta">
+<? while($legacy_thing=$list->next()){
+	$c++;	$css=($c % 2)?"odd":"even";
+?>
+<tr class="<?=$css?>">
+	<td><?=link_to("edit", "edit", $legacy_thing->prop['id'])?></td>
+	<td><?=$legacy_thing->prop['tps_report_number']?></td>
+	<td><?=$legacy_thing->prop['version']?></td>
+
+</tr>
+<? } ?>
+</table>

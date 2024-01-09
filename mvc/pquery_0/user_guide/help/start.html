@@ -1,0 +1,81 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+
+<title>PQuery User Guide</title>
+
+<style type='text/css' media='all'>@import url('../userguide.css');</style>
+<link rel='stylesheet' type='text/css' media='all' href='userguide.css' />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv='expires' content='-1' />
+<meta http-equiv= 'pragma' content='no-cache' />
+<meta name='robots' content='all' />
+<meta name='author' content='Vikas Patial' />
+<meta name='description' content='PQuery User Guide' />
+
+</head>
+<body>
+
+<!-- START NAVIGATION -->
+<div id="masthead">
+<table cellpadding="0" cellspacing="0" border="0" style="width:100%">
+<tr>
+<td><h1>PQuery  Version 0.1</h1></td>
+<td id="breadcrumb_right"><a name="top"></a><a href="../toc.html">Full Table of Contents</a></td>
+</tr>
+</table>
+</div>
+<!-- END NAVIGATION -->
+
+<table cellpadding="0" cellspacing="0" border="0" style="width:100%">
+<tr>
+<td id="breadcrumb">
+<a href="http://www.ngcoders.com/pquery/">PQuery  Home</a> &nbsp;&#8250;&nbsp; 
+<a href="../index.html">User Guide Home</a> &nbsp;&#8250;&nbsp;
+Getting Started
+</td>
+<td id="searchbox"><form method="get" action="http://www.google.com/search"><input type="hidden" name="as_sitesearch" id="as_sitesearch" value="www.ngcoders.com/pquery/" />Search User Guide&nbsp; <input type="text" class="input" style="width:200px;" name="q" id="q" size="31" maxlength="255" value="" />&nbsp;<input type="submit" class="submit" name="sa" value="Go" /></form></td>
+</tr>
+</table>
+<br clear="all" />
+
+<!-- START CONTENT -->
+<div id="content">
+
+<h1>Getting Started</h1>
+<p>Learning anything new takes time and effort, I have tried to simply this learning curve as much as possible.</p>
+  <p>For the first tutorial lets start with a very common and widely used auto-completing 
+    effect.This tutorial is also availible in your demos directory.</p>
+  <ol>
+    <li>First thing you need to do is <a href="./install.html">install</a> PQuery  
+      and include the file in your script.</li>
+    <li>Now lets create a new instance of PQuery  though which all the functionality will be accessed. 
+	  <code>$pquery  = new PQuery();</code>	 </li>
+    
+	<li>Once you have intialized the class lets make a simple ajax form submitter using PQuery.
+	   <code>&lt;?=$pquery-&gt;form_remote_tag(array('url'=&gt;'index.php?task=ajax','update'=&gt;'#idtoupdate'));?&gt;<br />
+	   Field : &lt;input type=&quot;text&quot; name=&quot;field&quot; /&gt;&lt;br /&gt;<br />
+	   &lt;input type=&quot;submit&quot; /&gt; <br />
+	   &lt;/form&gt;
+	   </code>	</li>
+    <li>When you enter anything into this it will call the url <em><strong>index.php?task=ajax</strong></em> , Itll pass the current value of dob as $_GET['field'] on the server side.</li>
+  </ol>
+<p>See how simple it was.</p>
+
+
+</div>
+<!-- END CONTENT -->
+
+
+
+
+<!-- END CONTENT -->
+<div id="footer">
+<p><a href="#top">Top of Page</a><p>
+<p><a href="http://www.ngcoders.com/pquery/">PQuery </a> &nbsp;&middot;&nbsp; Copyright &#169; 2006 &nbsp;&middot;&nbsp; <a href="http://www.ngcoders.com">NGCoders</a></p>
+</div>
+
+
+
+</body>
+</html>

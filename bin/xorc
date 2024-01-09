@@ -1,0 +1,57 @@
+#!/usr/bin/env php
+<?php
+
+$VERSION=0.2;
+error_reporting(E_ERROR | E_WARNING | E_PARSE);
+// CLI interface
+$myself=realpath(__FILE__);
+$bin = basename($myself);
+$mypath = dirname($myself);
+
+ini_set("include_path", ".".PATH_SEPARATOR.dirname($mypath).PATH_SEPARATOR.ini_get("include_path"));
+ini_set("max_execution_time", "600");
+#set_magic_quotes_runtime(0);
+// error_reporting(63);
+
+require_once("div/util.php");
+require_once("div/ezoptions.class.php");
+// include_once("div/xh.class.php");
+require_once("div/cli_util.php");
+require_once("div/naming.class.php");
+
+$tooldir = dirname($mypath)."/bin/scripts";
+require_once "xorc.class.php";
+
+	$con  = new EzOptions;
+	$opts = $con->parse(array(
+		'h'=>array('h', 'help', 'dieser hilfetext'),
+		't'=>array('t','target', 'targetdirectory, where to create the file(s)', '/target/directory'),
+		'i'=>array('i', '' , 'use inifile for db connect', 'filename'),
+		'db'=>array('', 'db' , 'use connectstring "driver:host:user:password:dbname" for db connect', 'connectstring'),
+		'prefix'=>array('p', 'prefix', 'tablenameprefix WITHOUT _', 'prefix'),
+		'migrations'=>array('', 'migrations', 'directory for reading + writing migrations', '/path/to/migrations'),  
+		'noclasses'=>array('','noclasses', 'don\'t produce classfiles with the inifiles'),
+		'app'=>array('','appname', 'application name', 'name'),
+		'force'=>array('','force', 'erzwinge eine bestimmte aktion'),
+		'from'=>array('','from', 'fuer konvertierungen von ...'),
+		'to'=>array('','to', '... nach bei konvertierungen'),
+		'version'=>array('V', 'version', 'programm/ installationsinformationen'),
+		'v'=>array('v', '' , 'verbose (sei gespraechig)'),
+		'debug'=>array('', 'debug' , 'many many debugstatements, be careful')
+		),
+		
+		"  -=xorc=-\nVersion {$VERSION}. generator tools (c) 20sec.net, 2001-2017,".
+		" GNU General Public Licence\n",
+		$tooldir
+		);
+
+	$margs=$opts['_REMAINING_'];	
+	
+	if($opts['debug']){
+		print_r($opts);
+		$_DEBUGLEVEL=1;
+	}
+	if(!$opts['t']) $opts['t']=getcwd();
+	include($opts['_COMMAND_']);
+
+?>

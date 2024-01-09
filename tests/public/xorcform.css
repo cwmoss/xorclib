@@ -1,0 +1,90 @@
+/* diese styles sind fuer die systemformulare */
+.xorcformerror{color:#c00;}
+#pager {margin: 1px;padding: 1px;border: 1px solid #aaa;font: 10px verdana,geneva,sans-serif;float:left;}
+#pager a{text-decoration:none;color:white;}
+#pager div{margin: 1px;padding: 0px 3px 0px 3px;color: #f8f8f8;background: #886;float:left;}
+#pager div.act {background-color: black;color: white;}
+#pager div.act a{background-color: black;}
+#pager div.arrow {color: #f8f8f8;background: #a42;}
+#pager div.descr {color: #f8f8f8;background: #a42;}
+
+div.spacer {clear: both;}
+#container {width: 500px; background-color: #ccc; 
+/*	border: 1px dotted #333; */
+	padding: 5px; margin: 0px auto;}
+
+
+.fdouble div.row {clear: both; padding-top: 5px; font-size:11px; font-family:verdana, geneva, sans-serif;}
+.fdouble div.row div.label {float: left;width: 20%;text-align: right;}
+.fdouble div.row div.formelement {float: right; width: 76%;text-align: left;}
+.fdouble div.row div.error {color:#c00; font-weight:bold;}
+
+
+.fsingle div.row {clear: both; padding-top: 5px; font-size:11px; font-family:verdana, geneva, sans-serif;}
+.fsingle div.row div.label {text-transform: uppercase ;font-size:9px;}
+.fsingle div.row div.formelement {font-size:11px;}
+.fsingle div.row div.error {color:#c00; font-weight:bold;}
+
+
+.ffloat div.row {float: left; padding-top: 5px; font-family:verdana, geneva, sans-serif;}
+.ffloat div.row div.label {font-size:9px; text-transform: uppercase ;}
+.ffloat div.row div.formelement {font-size:11px;}
+.ffloat div.row div.error {color:#c00; font-weight:bold;}
+
+#zebratable {
+	/*border: 1px solid #666666;*/
+}
+
+#zebratable tbody tr td {
+	font-family: "lucida grande", verdana, sans-serif;
+	font-size: 8pt;
+	padding: 3px 8px;
+	/*border-left: 1px solid #D9D9D9;*/
+}
+
+#zebratable tbody tr.selected td {
+	background-color: #3d80df;
+	color: #ffffff;
+	font-weight: bold;
+	/*border-left: 1px solid #346DBE;*/
+	/*border-bottom: 1px solid #7DAAEA;*/
+}
+
+#zebratable2 {
+	border: 1px solid #666666;
+}
+
+#zebratable2 tbody tr td {
+	font-family: "lucida grande", verdana, sans-serif;
+	font-size: 8pt;
+	padding: 3px 8px;
+	border-left: 1px solid #D9D9D9;
+}
+
+#zebratable2 tbody tr.selected td {
+	background-color: #3d80df;
+	color: #ffffff;
+	font-weight: bold;
+	border-left: 1px solid #346DBE;
+	border-bottom: 1px solid #7DAAEA;
+}
+#zebratable td.odd{background-color: #fff;}
+#zebratable td.even{background-color: #f2f2f2;}
+
+table.sorttable{width:100%;border-collapse: collapse;}
+table.sorttable tr{
+	border-top:1px solid #333;
+	border-bottom:1px solid #333;}
+table.sorttable td{padding:3px;vertical-align:top;}
+.sbcont ul{list-style-type:none;margin:0;padding:0;}
+/*table.sorttable tr.attachbg{border-bottom:1px solid #333;}*/
+.zeta{border:1px solid #999;}
+.zeta td{
+	font:normal 8pt "lucida grande", verdana, sans-serif;
+	padding: 3px 8px;
+}
+.zeta tr.odd {background-color: #fff;}
+.zeta tr.even {background-color: #f2f2f2;}
+.zeta thead th {background-color: #ddd;}
+.zeta tr.on{background-color:#ffc;}
+.zeta td.marker {background-color:#99bc1a;}

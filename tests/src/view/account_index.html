@@ -1,0 +1,12 @@
+<table class="zeta">
+<? while($account=$list->next()){
+	$c++;	$css=($c % 2)?"odd":"even";
+?>
+<tr class="<?=$css?>">
+	<td><?=link_to("edit", "edit", $account->prop['id'])?></td>
+	<td><?=$account->prop['firm_id']?></td>
+	<td><?=$account->prop['credit_limit']?></td>
+
+</tr>
+<? } ?>
+</table>

@@ -1,0 +1,21 @@
+<form action="<?=url()?>" method="post"><table border="0" align="center">
+<tr><td colspan="2"><b><?=$msg?></b></td></tr>
+<tr>
+  <td align="right"><i>E-Mail-Adresse:</i></td><td><input type="Text" name="xorcuser" size="25" maxlength="24" value=""></td>
+</tr>
+<tr>
+	<td align="right"><i>Passwort:</i></td><td><input type="password" name="xorcpass" size="25" maxlength="15" value=""></td>
+</tr>
+
+<?php if($conf['allow_rememberme']){ ?>
+
+<tr><td></td><td><input type="checkbox" name="xorcrememberme"><i>Remember me?</i></td></tr>
+
+<?php } ?>
+
+<tr>
+	<td></td>
+	<td><input type="Submit" name="post" value="Login"></td>
+</tr>
+</table>
+</form>

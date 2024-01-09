@@ -1,0 +1,117 @@
+<?
+class StaticPicture{
+	/******************************************************************************
+	| THUMBNAIL GENERATOR
+	|*****************************************************************************/
+    function div($a, $b){
+		return ($a-($a % $b))/$b;
+	}
+	function gen_thumb($src = "", $dest = "", $w = "", $h = "", $shave = false, $allow_rotate=false){
+// echo "width = $w , h = $h \n";
+		$mog = "/usr/bin/convert";       //   -crop {$w}x{$h}+{$pos_xy}
+		$b = getimagesize($src);
+		$sw = $b[0];
+		$sh = $b[1];
+		if(!$h){
+			$th = ($w/$sw)*$sh;
+			$h = floor($th);
+		}
+//		print_r($b);
+		//cut of edges (shave the pic)
+		$gravity = "";
+		$pos = "";
+		$resize = " -resize {$w}";
+		if(((($sw/$sh)-($w/$h))!=0) && $shave){
+			$gravity = "-gravity center";
+			$pos = "+0+0";
+			if($sw>$sh && $w>$h){
+				//gleiches format
+				$resize = " -resize x{$h}";
+			}else{
+				//falsches format
+				$resize = " -resize {$w}";
+			}
+		}
+		// end shave
+		//shave end
+		if( ( ($sw>$sh && $w<$h) || ($sw<$sh && $w>$h) ) && $allow_rotate ){
+			$tmp=$w; $w=$h; $h=$tmp;
+		}
+//		print "$src ~ $dest ~ $sw x $sh -> $w x $h\n";
+		// scale image?
+//		echo "4:3 Image<br>";
+		$max = 0;
+		$pos_xy = "0+0";
+		$cmd = "$mog $src {$resize} {$gravity} -crop {$w}x{$h}{$pos} -quality 80 $dest";
+//		print "$cmd\n<br>";
+		exec($cmd, $outp, $rc);
+		if($rc){
+			$ret="ERROR. mogrify failed (rc $rc).[".join("\n", $outp)."]";
+		}else{
+			return true;
+		}
+	}
+	function abs($a){
+		if($a < 0) return ($a+(-1));
+		return $a;
+	}
+	function gen_thumb_gd($src = "", $dest = "", $w = "", $h = "", $shave = false, $allow_rotate=false){
+	list($ow, $oh, $from_type) = getimagesize($src);
+
+switch($from_type){
+	case 1: // GIF
+			$srcImage = imageCreateFromGif($src);
+			break;
+	case 2: // JPG
+			$srcImage = imageCreateFromJpeg($src);
+			break;
+	case 3: // PNG
+			$srcImage = imageCreateFromPng($src);
+			break;
+	}
+	if( ( ($ow>$oh && $w<$h) || ($ow<$oh && $w>$h) ) && $allow_rotate ){
+		$tw = $w;
+		$w = $h;
+		$h = $tw;
+	}
+	$tempw = $w;
+	//echo " $oh * $w ) / $ow \n";
+	$temph = number_format((($oh*$w)/$ow), 0);
+
+	if($temph < $h){
+		$tempw = number_format((($ow*$h)/$oh), 0);
+		$temph = $h;
+	}
+	//echo " $temph / $tempw $oh / $ow";
+	$tempImage = imageCreateTrueColor($tempw, $temph);
+	imageAntiAlias($tempImage, true);
+
+	imagecopyresampled($tempImage, $srcImage, 0, 0, 0, 0, $tempw, $temph, $ow, $oh);
+	imagedestroy($srcImage);
+	if($shave){
+		// Calculate offsets
+		if($temph > $h)
+		{
+			$offsety = number_format(($temph/2)-($h/2), 0);
+			$offsetx = 0;
+		}
+		else
+		{
+			$offsety = 0;
+			$offsetx = number_format(($tempw/2)-($w/2), 0);
+		}
+		//echo " $offsetx / $offsety\n";
+		$destImage = imageCreateTrueColor($w, $h);
+
+		imagecopyresampled($destImage, $tempImage, 0, 0, $offsetx, $offsety, $w, $h, $w, $h);
+
+		imageJpeg($destImage, $dest, 80);
+		imagedestroy($destImage);
+	}else{
+		imageJpeg($tempImage, $dest, 80);
+		imagedestroy($tempImage);
+	}
+}
+
+}
+?>

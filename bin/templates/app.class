@@ -1,0 +1,14 @@
+<?php
+include("xorc/xorc.class");
+define("XORC_DB_SCHEMAPATH", dirname(__FILE__)."/schema");
+
+class <app-classname> extends Xorc{
+	var $include_path=__FILE__;
+
+	function load_classes(){
+	<loop includes>
+		include_once('<appname>/<modelfile>');
+	</loop>
+	}
+}
+?>

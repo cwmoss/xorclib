@@ -1,0 +1,18 @@
+<table class="zeta">
+<? while($mixin=$list->next()){
+	$c++;	$css=($c % 2)?"odd":"even";
+?>
+<tr class="<?=$css?>">
+	<td><?=link_to("edit", "edit", $mixin->prop['id'])?></td>
+	<td><?=$mixin->prop['parent_id']?></td>
+	<td><?=$mixin->prop['pos']?></td>
+	<td><?=$mixin->prop['created_at']?></td>
+	<td><?=$mixin->prop['updated_at']?></td>
+	<td><?=$mixin->prop['lft']?></td>
+	<td><?=$mixin->prop['rgt']?></td>
+	<td><?=$mixin->prop['root_id']?></td>
+	<td><?=$mixin->prop['type']?></td>
+
+</tr>
+<? } ?>
+</table>

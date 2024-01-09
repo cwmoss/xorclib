@@ -1,0 +1,12 @@
+<table class="zeta">
+<? while($computer=$list->next()){
+	$c++;	$css=($c % 2)?"odd":"even";
+?>
+<tr class="<?=$css?>">
+	<td><?=link_to("edit", "edit", $computer->prop['id'])?></td>
+	<td><?=$computer->prop['developer']?></td>
+	<td><?=$computer->prop['extendedwarranty']?></td>
+
+</tr>
+<? } ?>
+</table>

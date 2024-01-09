@@ -1,0 +1,17 @@
+<div id="logout">
+   <!-- TODO: $title soll hier 'Auf Wiedersehen!' lauten, wo setzten? -->
+   <!-- Sie haben sich ausgeloggt. 
+   Vielen Dank für Ihr Vertrauen, bis zum nächsten Mal! 
+   -->
+   <p><?=_('session timeout')?></p>
+   <p><?=_('logout gruß')?></p>
+
+   <!-- TODO: hier soll rechts der noch die Login-Box rein. --> 
+   <div class="xf">
+   <p class="button_link">
+      <br><br>
+      <?=link_to("/", _("Neu Anmelden"))?>
+   </p>
+   </div>
+</div>
+<?#var_dump($_SESSION);?>

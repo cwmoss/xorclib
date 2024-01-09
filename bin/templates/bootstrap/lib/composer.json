@@ -1,0 +1,7 @@
+{
+    "require": {
+        "fzaninotto/faker": "^1.5",
+        "swiftmailer/swiftmailer": "*",
+        "google/recaptcha": "~1.1"
+    }
+}

@@ -1,0 +1,12 @@
+<table class="zeta">
+<? while($project=$list->next()){
+	$c++;	$css=($c % 2)?"odd":"even";
+?>
+<tr class="<?=$css?>">
+	<td><?=link_to("edit", "edit", $project->prop['id'])?></td>
+	<td><?=$project->prop['name']?></td>
+	<td><?=$project->prop['type']?></td>
+
+</tr>
+<? } ?>
+</table>

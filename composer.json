@@ -1,0 +1,16 @@
+{
+    "autoload": {
+        "files": [
+            "xorcapp.class.php"
+        ]
+    },
+    "name": "cwmoss/xorclib",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Robert Wagner",
+            "email": "rw@20sec.net"
+        }
+    ],
+    "require": {}
+}

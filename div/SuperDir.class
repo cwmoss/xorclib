@@ -1,0 +1,85 @@
+<?php
+
+/*
+	verzeichnisbaeume durchbrausen...
+		...mit dem SuperDir™ 
+		
+		liefert - auf wunsch rekursiv - 
+		alle dateinamen (keine verzeichnisse) von einem startpfad ausgehend
+		startpfad/pfad/zur/datei
+		dabei koennen filter in form /regulaerer_ausdruecke/ gesetzt werden
+		
+	© rw@20sec.net, 27/11/2001
+		
+				$start = $argv[1]; // kommandozeile
+				$sd = new Superdir($start, true);
+				$sd->setSkip(array("/pictures/"));
+				while($f = $sd->next()){
+					print "$f\n";
+				}
+
+*/
+class SuperDir{
+
+	//welche verzeichnisse sollen nicht berücksichtigt werden?
+	var $skip = array();
+	
+	// startpfad
+	var $path;
+	// aktuelles verzeichnis
+	var $pos;
+	// verzeichnisstack
+	var $dir=array();
+	
+	//rekursiv durchwandern?
+	var $modeRekursiv;
+	
+	function Superdir($path, $mode=false){
+		$this->path = $path;
+		$d = dir($path);
+		if(!$d){
+			return new Error("path: $path not found\n");
+		}
+		array_push($this->dir, $d);
+		$this->pos = 0;
+		$this->modeRekursiv = $mode;
+	} 
+	
+	function next(){
+		if(!$this->dir) return false;
+		
+		$e = $this->dir[$this->pos]->read();
+		//print "--$e--";
+		if(!$e) {
+			$this->dir[$this->pos]->close();			
+			array_pop($this->dir);
+			$this->pos --;
+			return $this->next();
+		}
+		if($e=="." || $e=="..") return $this->next();
+		if(is_dir($this->dir[$this->pos]->path."/$e")){
+			
+			// verzeichnis ueberspringen?
+			if(!$this->test($e)) return $this->next();
+			if($this->modeRekursiv){
+				array_push($this->dir, dir($this->dir[$this->pos]->path."/$e"));
+				$this->pos ++;
+			}
+			return $this->next();
+		}
+		return $this->dir[$this->pos]->path."/$e";
+	}
+	
+	function setSkip($skip){
+		$this->skip = $skip;
+	}
+	
+	function test($e){
+		foreach($this->skip as $ex){
+			if(preg_match($ex, $e)) return false; 
+		}
+		return true;
+	}
+}
+?>      
+

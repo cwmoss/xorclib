@@ -1,0 +1,11 @@
+<table class="zeta">
+<? while($colnametest=$list->next()){
+	$c++;	$css=($c % 2)?"odd":"even";
+?>
+<tr class="<?=$css?>">
+	<td><?=link_to("edit", "edit", $colnametest->prop['id'])?></td>
+	<td><?=$colnametest->prop['references']?></td>
+
+</tr>
+<? } ?>
+</table>

@@ -1,0 +1,16 @@
+<table class="zeta">
+<? while($company=$list->next()){
+	$c++;	$css=($c % 2)?"odd":"even";
+?>
+<tr class="<?=$css?>">
+	<td><?=link_to("edit", "edit", $company->prop['id'])?></td>
+	<td><?=$company->prop['type']?></td>
+	<td><?=$company->prop['ruby_type']?></td>
+	<td><?=$company->prop['firm_id']?></td>
+	<td><?=$company->prop['name']?></td>
+	<td><?=$company->prop['client_of']?></td>
+	<td><?=$company->prop['rating']?></td>
+
+</tr>
+<? } ?>
+</table>

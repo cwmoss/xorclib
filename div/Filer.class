@@ -1,0 +1,187 @@
+<?
+class Filer{
+
+
+   function mkdirrec($dir){
+      #  echo $dir."<br>";
+      if(is_dir($dir)){
+         return true;
+      }
+      if(@mkdir($dir))
+         return true;
+      $dd =explode("/", $dir);
+      $left = array();
+      array_push($left, array_pop($dd));
+      while(!is_dir(implode("/", $dd)) && count($dd)>2){
+         array_push($left, array_pop($dd));
+      }
+      #echo implode("/", $dd)."<br>";
+      #print_r($left);
+      $dd[] = array_pop($left);
+      while(!is_dir(implode("/", $dd)) && count($dd)>2 && count($left)>0){
+         #   echo implode("/", $dd)."<br>";
+         if(!mkdir(implode("/", $dd))){
+            return false;
+         }
+         $dd[] = array_pop($left);
+      }
+      #echo implode("/", $dd);
+      mkdir(implode("/", $dd));
+      if(is_dir($dir))
+         return true;
+      return false;
+   }
+
+   function copy($src, $dest, $create=false){
+      $dd = explode("/", $dest);
+      array_pop($dd);
+      if(is_dir(implode("/", $dd))){
+         return copy($src, $dest);
+      }
+      if($create){
+         $left = array();
+         array_push($left, array_pop($dd));
+         while(!is_dir(implode("/", $dd)) && count($dd)>2){
+            array_push($left, array_pop($dd));
+         }
+         while(count($dd)>2 && count($left)>0){
+            $dd[] = array_pop($left);
+            if(!mkdir(implode("/", $dd))){
+               return false;
+            }
+         }
+         if(copy($src, $dest)){
+            return true;
+         }
+      }
+      return false;
+   }
+
+   function ftpcopy($file, $remoteinfo){
+      #echo "conect to ".$remoteinfo['ftpserver'];
+      $con = ftp_connect($remoteinfo['ftpserver']);
+      if(!$con){
+         trigger_error('Cannot connect to ftp!');
+         return false;
+      }
+      log_error("+con+ok");
+      $login = ftp_login($con, $remoteinfo['ftpuser'], $remoteinfo['ftppass']);
+      ftp_pasv($con, true);
+      if($login && $con){
+         log_error("+login+ok");
+         if(strpos($file, $remoteinfo['localroot'])===0){
+            log_error("Y");
+            $local = substr($file, strlen($remoteinfo['localroot']), strlen($file));
+            $remote = str_replace("//", "/", $remoteinfo['remoteroot']."".$local);
+            $dir = substr($remote, 0, strrpos($remote, "/"));
+            //print($remoteinfo['localroot']."~localroot~".$local."~local~".$dir."~dir<br>");
+            log_error("ftpcopy $file => $remote");
+            $upload = @ftp_put($con, $remote, $file, FTP_BINARY);
+            if (!$upload) {
+               //echo "nix upload";
+               log_error("ftpmkdir $dir");
+               Filer::ftpmkdir($con, $dir);
+               @ftp_put($con, $remote, $file, FTP_BINARY);
+            }
+         }
+         ftp_close($con);
+         return true;
+      }
+      ftp_close($con);
+   }
+
+   function ftp_file_exists($file, $remoteinfo){
+      $con = ftp_connect($remoteinfo['ftpserver']);
+      if(!$con){
+         trigger_error('Cannot connect to ftp!');
+         return false;
+      }
+      $login = ftp_login($con, $remoteinfo['ftpuser'], $remoteinfo['ftppass']);
+      ftp_pasv($con, true);
+      if($login && $con){
+         if(strpos($file, $remoteinfo['localroot'])===0){
+            $local = substr($file, strlen($remoteinfo['localroot']), strlen($file));
+            $remote = str_replace("//", "/", $remoteinfo['remoteroot']."".$local);
+            $res = ftp_size($con, $remote);
+            if ($res != -1) {
+               ftp_close($con);
+               return true;
+            }
+         }
+      }
+      ftp_close($con);
+      return true;      
+   }
+
+   function ftpdelete($file, $remoteinfo){
+      //echo "conect to ".$remoteinfo['ftpserver'];
+      $con = ftp_connect($remoteinfo['ftpserver']);
+      if(!$con){
+         trigger_error('Cannot connect to ftp!');
+         return false;
+      }
+      $login = ftp_login($con, $remoteinfo['ftpuser'], $remoteinfo['ftppass']);
+      ftp_pasv($con, true);
+      if($login && $con){
+         if(strpos($file, $remoteinfo['localroot'])===0){
+            $local = substr($file, strlen($remoteinfo['localroot']), strlen($file));
+            $remote = str_replace("//", "/", $remoteinfo['remoteroot']."".$local);
+            $dir = substr($remote, 0, strrpos($remote, "/"));
+            //print($remoteinfo['localroot']."~localroot~".$local."~local~".$dir."~dir<br>");
+            //print($file."~".$remote."<br>");
+            //above here = copy from ftpcopy!
+
+            @ftp_delete($con, $remote);
+
+            //below here = copy from ftpcopy!
+         }
+         ftp_close($con);
+         return true;
+      }
+      ftp_close($con);
+   }
+   function ftpdeletedir($file, $remoteinfo){
+      //echo "conect to ".$remoteinfo['ftpserver'];
+      $con = ftp_connect($remoteinfo['ftpserver']);
+      if(!$con){
+         trigger_error('Cannot connect to ftp!');
+         return false;
+      }
+      $login = ftp_login($con, $remoteinfo['ftpuser'], $remoteinfo['ftppass']);
+      ftp_pasv($con, true);
+      if($login && $con){
+         if(strpos($file, $remoteinfo['localroot'])===0){
+            $local = substr($file, strlen($remoteinfo['localroot']), strlen($file));
+            $remote = str_replace("//", "/", $remoteinfo['remoteroot']."".$local);
+            $dir = substr($remote, 0, strrpos($remote, "/"));
+            //print($remoteinfo['localroot']."~localroot~".$local."~local~".$dir."~dir<br>");
+            //print($file."~".$remote."<br>");
+            //above here = copy from ftpcopy!
+
+            ftp_rmdir($con, $remote);
+
+            //below here = copy from ftpcopy!
+         }
+         ftp_close($con);
+         return true;
+      }
+      ftp_close($con);
+   }
+   function ftpmkdir($con, $dir){
+      $arr = explode("/", $dir);
+      //print_r($arr);
+      $cdir = "";
+      $odir = "";
+      foreach($arr as $k){
+         $odir = $cdir;
+         if($k!=""){
+            $cdir .= "/".$k; 
+            if(!isset($ftplist) ||!@in_array($k, $ftplist)){
+               @ftp_mkdir($con, $cdir);
+            } 
+         }
+      }
+   }
+
+}
+?>

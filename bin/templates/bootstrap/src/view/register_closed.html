@@ -1,0 +1,15 @@
+
+<div class="container">
+	<div class="row" style="margin-top:16px;">
+		<div class="col-xs-10 col-xs-offset-1">
+		
+		<?if($page){?>
+			<?=$page->html?>
+		<?}else{?>
+			<p>Der Wettbewerb ist vorbei. Eine Registrierung ist daher nicht möglich.</p>
+			<p>Hier geht's zum <?=link_to('dashboard/image/index', "Dashboard", array(), array('class'=>'', 'title'=>'Zum Dashboard'))?></p>
+		<?}?>
+	
+		</div>
+	</div>
+</div>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta name="content-type" content="text/html; charset=utf-8" />
+		<title><app-name> &gt;&gt; <?=$title?> &gt;&gt; <?=$action_title?></title>
+		<?=css_tag("css/jqmodal.css")?>
+
+		<?if($_SERVER['XORC_ENV']=='development'){?>
+			<?=css_tag("css/app.scss")?>
+		<?}else{?>
+			<?=css_tag("css/app.css")?>
+		<?}?>
+	</head>
+	
+<body>
+	<div id="body">
+		
+		<header>
+			<?=render_part("header")?>
+		</header>
+		
+		
+		<main id="content">
+			<nav>
+				<?=render_part("navigation")?>
+			</nav>
+
+			<!-- <h2><?=$title?></h2> -->
+		
+			<?if($msg=flash()){?><div class="alert alert-success" role="alert"><?=$msg?></div><?}?>
+		
+			<?=$content?>
+		
+		</main>
+		
+		<footer>
+			<?=render_part("footer")?>
+		</footer>
+		
+	</div>
+
+
+<?=js_tag("js/super8.js")?>
+
+</body>
+</html>

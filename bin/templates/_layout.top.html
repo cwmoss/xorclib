@@ -1,0 +1,22 @@
+<?php
+
+$APP_NAV=array(
+<loop navigation>
+	"<url>" => "<description>",
+</loop>
+//xOrCgeN:	%next-nav-element%
+);
+
+print("<div id=\"navcontainer\">\n\t<ul id=\"navlist\">");
+foreach($APP_NAV as $url=>$descr){
+	$licss=$acss="";
+	if($url==$navpoint){
+		$licss=' id="active"';
+		$acss=' id="current"';
+	}
+	printf('<li%s><a href="%s"%s>%s</a></li>',
+		$licss, url("$url/index"), $acss, $descr);
+}
+print("</ul>\n</div>\n\n");
+
+?>

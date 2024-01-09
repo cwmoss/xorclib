@@ -1,0 +1,14 @@
+<table class="zeta">
+<? while($developers_project=$list->next()){
+	$c++;	$css=($c % 2)?"odd":"even";
+?>
+<tr class="<?=$css?>">
+	<td><?=link_to("edit", "edit", $developers_project->prop[''])?></td>
+	<td><?=$developers_project->prop['developer_id']?></td>
+	<td><?=$developers_project->prop['project_id']?></td>
+	<td><?=$developers_project->prop['joined_on']?></td>
+	<td><?=$developers_project->prop['access_level']?></td>
+
+</tr>
+<? } ?>
+</table>

@@ -1,0 +1,70 @@
+#!/usr/bin/env php
+<?php
+$bin = basename(__FILE__);
+$mypath = dirname(__FILE__);
+
+ini_set("include_path", ".".PATH_SEPARATOR.dirname($mypath)."/lib".PATH_SEPARATOR.ini_get("include_path"));
+ini_set("max_execution_time", "600");
+set_magic_quotes_runtime(0);
+// error_reporting(63);
+
+include_once("xorc/div/util.php");
+include_once("xorc/div/ezoptions.class.php");
+include_once("xorc/div/xh.class.php");
+include_once("xorc/div/cli_util.php");
+// include_once("div/naming.class.php");
+
+$tooldir = dirname($mypath)."/lib/<appname>/cli";
+
+
+	$con  = new EzOptions;
+	$opts = $con->parse(array(
+		array(
+		'c', 'conf', 'pfad zur konfigurationsdatei', '/conf/<appname>_prod.ini'),
+		'h'=>array('h', 'help', 'dieser hilfetext'),
+		'o'=>array('o', 'object', 'welches objekt wird adressiert'),
+		't'=>array('t','target', 'targetdirectory, where to create the file(s)', '/target/directory'),
+		'force'=>array('','force', 'erzwinge eine bestimmte aktion'),
+		'version'=>array('V', 'version', 'programm/ installationsinformationen'),
+		'v'=>array('v', '' , 'verbose (sei gespraechig)'),
+		'debug'=>array('', 'debug' , 'many many debugstatements, be careful')
+		),
+		"<appname>. command-line-interface.\n\t\t-rw, (c) <year>, 20sec.net",
+		$tooldir);
+
+$VERSION=1.0;
+
+//print_r($opts);
+
+		$margs=$opts['_REMAINING_'];	
+
+
+include("xorc/xorcapp.class.php");
+include("<appname>/<appname>.class.php");
+
+if($opts['c']) $conf=$opts['c'];
+if(!$conf) $conf=$_SERVER["<envname>_CONF"];
+if(!$conf){
+   if($_SERVER["XORC_ENV"]=="development"){
+      $conf=dirname($mypath)."/conf/<appname>_dev.ini";
+   }else{
+      $conf=dirname($mypath)."/conf/<appname>_prod.ini";
+   }
+}
+$_SERVER["<envname>_CONF"]=$conf;
+
+#$_SERVER["HTTP_HOST"]="<appname>";
+$_SERVER['SCRIPT_NAME']="/<appname>/<appname>.bin";  # for url() function to work
+
+XorcApp::run("<appname>");
+
+	//print_r($opts);
+	
+	if($opts['debug']){
+		print_r($opts);
+		$_DEBUGLEVEL=1;
+	}
+	
+	include($opts['_COMMAND_']);
+
+?>

@@ -1,0 +1,10 @@
+<table class="zeta">
+<? while($fk_test_has_pk=$list->next()){
+	$c++;	$css=($c % 2)?"odd":"even";
+?>
+<tr class="<?=$css?>">
+	<td><?=link_to("edit", "edit", $fk_test_has_pk->prop['id'])?></td>
+
+</tr>
+<? } ?>
+</table>

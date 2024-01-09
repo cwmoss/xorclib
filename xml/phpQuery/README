@@ -1,0 +1,116 @@
+phpQuery - pq();
+phpQuery is a server-side, chainable, CSS3 selector driven Document Object Model (DOM) API based on jQuery JavaScript Library. 
+Library is written in PHP5 and provides Command Line Interface (CLI). 
+Manual
+ * Basics 
+ * Ported jQuery sections 
+   * Selectors 
+   * Attributes 
+   * Traversing 
+   * Manipulation 
+   * Ajax 
+   * Events 
+   * Utilities 
+   * Plugin ports 
+ * PHP Support 
+ * Command Line Interface 
+ * Multi document support 
+ * Plugins 
+   * WebBrowser 
+   * Scripts 
+ * jQueryServer 
+ * Debugging 
+
+Download
+ * Release packages (rss) 
+   * ZIP format 
+   * RPM format 
+ * Release notes 
+ * Bugs: active / fixed 
+ * Dependencies 
+ * SVN checkout 
+
+Documentation
+ * Wiki 
+ * Manual 
+ * API reference 
+ * jQuery documentation wiki 
+   * CHM version for offline use 
+
+Publications
+ * Official blog with latest release notes and examples 
+ * Author's blog with new feature sneak peaks 
+ * Roadmap: Planned / Done 
+
+Feedback
+ * Issue/Bug Tracker (new issue) 
+ * Google Group 
+ * IRC #phpquery at freenode.net 
+ * ohloh.net has phpQuery project 
+
+Examples
+CLI
+Fetch number of downloads of all release packages 
+phpquery 'http://code.google.com/p/phpquery/downloads/list?can=1' \
+  --find '.vt.col_4 a' --contents \
+  --getString null array_sum
+PHP
+Examples from demo.php 
+require('phpQuery/phpQuery.php');
+
+// INITIALIZE IT
+// $doc = phpQuery::newDocumentHTML($markup);
+// $doc = phpQuery::newDocumentXML();
+// $doc = phpQuery::newDocumentFileXHTML('test.html');
+// $doc = phpQuery::newDocumentFilePHP('test.php');
+// $doc = phpQuery::newDocument('test.xml', 'application/rss+xml');
+// this one defaults to text/html in utf8
+$doc = phpQuery::newDocument('<div/>');
+
+// FILL IT
+// array syntax works like ->find() here
+$doc['div']->append('<ul></ul>');
+// array set changes inner html
+$doc['div ul'] = '<li>1</li><li>2</li><li>3</li>';
+
+// MANIPULATE IT
+// almost everything can be a chain
+$li;
+$doc['ul > li']
+	->addClass('my-new-class')
+	->filter(':last')
+		->addClass('last-li')
+// save it anywhere in the chain
+		->toReference($li);
+
+// SELECT IT
+// pq(); is using selected document as default
+phpQuery::selectDocument($doc);
+// documents are selected when created, iterated or by above method
+// query all unordered lists in last selected document
+pq('ul')->insertAfter('div');
+
+// INTERATE
+// all LIs from last selected DOM
+foreach(pq('li') as $li) {
+	// iteration returns PLAIN dom nodes, NOT phpQuery objects
+	$tagName = $li->tagName;
+	$childNodes = $li->childNodes;
+	// so you NEED to wrap it within phpQuery, using pq();
+	pq($li)->addClass('my-second-new-class');
+}
+
+// PRINT OUTPUT
+// 1st way
+print phpQuery::getDocument($doc->getDocumentID());
+// 2nd way
+print phpQuery::getDocument(pq('div')->getDocumentID());
+// 3rd way
+print pq('div')->getDocument();
+// 4th way
+print $doc->htmlOuter();
+// 5th way
+print $doc;
+// another...
+print $doc['ul'];
+

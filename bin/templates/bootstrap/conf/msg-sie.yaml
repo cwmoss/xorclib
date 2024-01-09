@@ -1,0 +1,15 @@
+user: Bitte wählen Sie einen Benutzernamen. Dieser wird für die Präsentation Ihrer Fotos in der Gallerie verwendet.
+missing-input-response: Bitte machen Sie den Mensch-Maschine-Test
+invalid-input-response: Der Mensch-Maschine-Test ist fehlgeschlagen. Bitte versuchen Sie es noch einmal.
+thank-you-register: Vielen Dank für Ihre Beteiligung. Es ist eine E-Mail an Sie unterwegs. Bitte folgen Sie den dort enthaltenen Anweisungen, um die Registrierung zu bestätigen.
+email-sent: Eine E-Mail ist zu Ihnen unterwegs.
+pwd-changed: Das Passwort wurde geändert. Sie können sich ab jetzt damit einloggen.
+file-err-limit: Die Daten konnten nicht verarbeitet werden. Die Datei ist zu groß. Bitte beachten Sie das Limit von maximal 22 MB.
+file-err-empty: Bitte wählen Sie eine Datei aus.
+file-err-total: Sie können nur max. 10 Fotos hochladen. Diese Grenze ist erreicht.
+file-err-nofile: Keine Datei gesendet. Bitte wählen Sie eine Datei aus.
+sein: Sie sind
+thank-you-ask: Vielen Dank. Ihre Anfrage wurde entgegen genommen.
+uploading: Ihr Foto wird hochgeladen. Bitte haben Sie einen Moment Geduld.
+confirm-image-delete: Möchten Sie dieses Foto wirklich löschen?
+max-images: Sie können maximal 10 Fotos einreichen.

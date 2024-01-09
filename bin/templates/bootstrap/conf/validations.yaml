@@ -1,0 +1,66 @@
+uname:
+  mand:
+  min:
+    val: 3
+  max: 
+    val: 16
+  unique:
+    scope: contest_id
+passwd:
+  on: create,change_password,reset_password
+  mand:
+  min:
+    val: 6
+  max:
+    val: 64
+  confirm:
+passwd_old:
+  on: change_password
+  mand:
+  .check_password: Das Passwort ist falsch
+email:
+  mand:
+  email:
+  unique:
+    scope: contest_id
+    msg: Es ist schon jemand unter dieser E-Mail-Adresse registriert.
+age:
+  mand:
+  minval:
+    val: 18
+    msg: Es dürfen leider nur volljährige Personen mitmachen.
+fname:
+  mand:
+lname:
+  mand:
+street:
+  mand:
+number:
+  mand:
+postalcode:
+  mand:
+city:
+  mand:
+toc:
+  accept:
+    msg: Bitte akzeptiere die Teilnahmebedingungen
+reminder_email:
+  mand:
+  .check_email_exists:
+    msg: Unter dieser E-Mail-Adresse konnte kein Teilnehmer gefunden werden.
+token:
+  on: confirm
+  mand:
+  .check_token:
+    msg: Fehlerhafter Freischaltcode. Bitte gib den Code ein, den wir dir per E-Mail geschickt haben.
+reset_token:
+  on: reset_password
+  mand:
+  .check_reset_token:
+    msg: Fehlerhafter Resetcode. Bitte gib den Code ein, den wir dir per E-Mail geschickt haben.
+slug:
+   mand:
+   unique:
+      scope: contest_id
+
+    

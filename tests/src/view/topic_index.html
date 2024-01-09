@@ -1,0 +1,21 @@
+<table class="zeta">
+<? while($topic=$list->next()){
+	$c++;	$css=($c % 2)?"odd":"even";
+?>
+<tr class="<?=$css?>">
+	<td><?=link_to("edit", "edit", $topic->prop['id'])?></td>
+	<td><?=$topic->prop['title']?></td>
+	<td><?=$topic->prop['author_name']?></td>
+	<td><?=$topic->prop['author_email_address']?></td>
+	<td><?=$topic->prop['written_on']?></td>
+	<td><?=$topic->prop['bonus_time']?></td>
+	<td><?=$topic->prop['last_read']?></td>
+	<td><?=$topic->prop['content']?></td>
+	<td><?=$topic->prop['approved']?></td>
+	<td><?=$topic->prop['replies_count']?></td>
+	<td><?=$topic->prop['parent_id']?></td>
+	<td><?=$topic->prop['type']?></td>
+
+</tr>
+<? } ?>
+</table>

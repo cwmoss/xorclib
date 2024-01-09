@@ -1,0 +1,22 @@
+<h3><model-name> anlegen</h3>
+
+<?php $f = new Xorc_objectform($<model-var>, '<model-var>', array("autoid"=>true)); ?>
+
+<?=$f->error_messages()?>
+
+<?=$f->start("save", array("class"=>"form-horizontal"))?>
+
+	<?=render_part('<model-var>_form', array("f"=>$f))?>
+
+<fieldset class="action">
+	<?=submit_tag("create", "Speichern", array('class'=>'btn btn-primary'))?>
+
+
+	<div class="secondary">
+		<?=link_to('index', "Zurück", array(), array("class"=>"btn btn-outline-primary"));?>
+	</div>
+</fieldset>
+
+<?=$f->validations()?>
+
+<?=end_form_tag()?>

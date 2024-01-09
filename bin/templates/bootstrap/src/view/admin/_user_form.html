@@ -1,0 +1,31 @@
+<fieldset class="odd">
+			
+
+		<?if($create){?>
+			<?=row($f, "passwd")?>
+		<?}?>
+		
+		<?=row($f, "status", 'selectbox')?>
+		<?=row($f, "role", 'selectbox')?>
+		
+		<?=row($f, "email")?>
+		<?=row($f, "uname")?>
+		
+		<?=row($f, "age")?>
+		<?=row($f, "fname")?>
+		<?=row($f, "lname")?>
+
+		<?=row($f, ["street", "number"], 'text', ['label'=>'Straße, Hnr.'])?>
+		<?#=row($f, "number")?>
+		<?=row($f, ["postalcode", "city"], null, ['label'=>'PLZ, Ort'])?>
+
+		<?=row($f, "country", 'selectbox')?>
+	
+		<?row_dd($f->obj)?>
+		<?=row_dd("token_expires_at")?>	
+		<?=row_dd("confirmed_at")?>	
+		<?=row_dd("login_count")?>
+		<?=row_dd("login_from")?>
+		<?=row_dd("login_at")?>	
+	
+</fieldset>

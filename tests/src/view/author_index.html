@@ -1,0 +1,11 @@
+<table class="zeta">
+<? while($author=$list->next()){
+	$c++;	$css=($c % 2)?"odd":"even";
+?>
+<tr class="<?=$css?>">
+	<td><?=link_to("edit", "edit", $author->prop['id'])?></td>
+	<td><?=$author->prop['name']?></td>
+
+</tr>
+<? } ?>
+</table>

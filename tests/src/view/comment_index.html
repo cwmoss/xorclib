@@ -1,0 +1,13 @@
+<table class="zeta">
+<? while($comment=$list->next()){
+	$c++;	$css=($c % 2)?"odd":"even";
+?>
+<tr class="<?=$css?>">
+	<td><?=link_to("edit", "edit", $comment->prop['id'])?></td>
+	<td><?=$comment->prop['post_id']?></td>
+	<td><?=$comment->prop['body']?></td>
+	<td><?=$comment->prop['type']?></td>
+
+</tr>
+<? } ?>
+</table>

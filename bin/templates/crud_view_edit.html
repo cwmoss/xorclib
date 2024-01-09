@@ -1,0 +1,30 @@
+<h3><model-name> bearbeiten</h3>
+
+<?php $f = new Xorc_objectform($<model-var>, '<model-var>', array("autoid"=>true)); ?>
+
+<?=$f->error_messages()?>
+
+<?=$f->start(array("save", $<model-var>->id), array("class"=>"form-horizontal"))?>
+
+	<?=render_part('<model-var>_form', array("f"=>$f))?>
+
+
+<fieldset class="btn-group action">
+
+	<?=submit_tag("save", "Speichern", array('class'=>'btn btn-primary'))?>
+
+	<div class="secondary">
+		<?=link_to('index', "Zurück", array(), array("class"=>"btn btn-outline-primary"));?>
+	</div>
+
+</fieldset>
+
+<?=$f->validations()?>
+
+<?=end_form_tag()?>
+
+
+<h6><model-name> löschen</h6>
+
+<?=button_to('delete', "Löschen", $<model-var>->id, array("class"=>"btn btn-danger", "confirm"=>"Wollen Sie diesen <model-name> wirklich löschen?"));?>
+

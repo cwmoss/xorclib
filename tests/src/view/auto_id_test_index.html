@@ -1,0 +1,11 @@
+<table class="zeta">
+<? while($auto_id_test=$list->next()){
+	$c++;	$css=($c % 2)?"odd":"even";
+?>
+<tr class="<?=$css?>">
+	<td><?=link_to("edit", "edit", $auto_id_test->prop['auto_id'])?></td>
+	<td><?=$auto_id_test->prop['value']?></td>
+
+</tr>
+<? } ?>
+</table>

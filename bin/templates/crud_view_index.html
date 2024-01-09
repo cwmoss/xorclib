@@ -1,0 +1,45 @@
+<div class="list-header row">
+
+	<div class="col">
+
+		<?=link_to("create", "<model-name> anlegen", null, array("class"=>"btn green"))?>
+
+	</div>
+
+	<div class="col">
+		<form action="<?=url('index')?>" class="form-inline">
+			<label class="sr-only" for="q">Suchbegriff</label><!-- screenreader -->
+			<?=text_field_tag('q', $q, array("class"=>"form-control col", 'placeholder'=>'Suchbegriff'))?>
+			<?=submit_tag("search", "Suchen", array('class'=>'btn btn-outline-success ml-2 form-control'))?>	
+		</form>
+	</div>
+
+</div>
+
+<?=render_part('pager', array('pager'=>$pager))?>
+
+<table class="table table-condensed table-striped">
+
+	<thead>
+			<th></th>
+		<loop columns>
+			<th><human></th>
+		</loop>
+	</thead>
+
+	<tbody>
+<? foreach($items as $<model-var>){
+	$c++;	$css=($c % 2)?"odd":"even";
+?>
+<tr class="<?=$css?>">
+	<td><?=link_to("edit", "bearbeiten", $<model-var>->id)?></td>
+<loop columns>
+	<td><?=<value-ar>?></td>
+</loop>
+</tr>
+<? } ?>
+	</tbody>
+</table>
+
+<?=render_part('pager', array('pager'=>$pager))?>
+

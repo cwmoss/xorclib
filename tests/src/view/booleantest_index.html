@@ -1,0 +1,11 @@
+<table class="zeta">
+<? while($booleantest=$list->next()){
+	$c++;	$css=($c % 2)?"odd":"even";
+?>
+<tr class="<?=$css?>">
+	<td><?=link_to("edit", "edit", $booleantest->prop['id'])?></td>
+	<td><?=$booleantest->prop['value']?></td>
+
+</tr>
+<? } ?>
+</table>

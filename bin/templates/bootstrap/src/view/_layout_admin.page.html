@@ -1,0 +1,46 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+	"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+	<head>
+		<meta name="content-type" content="text/html; charset=utf-8" />
+		<title><?=$title?></title>
+		<?=css_tag('js/jquery-ui-1.11.3.custom/jquery-ui.theme.min.css')?>		
+		<?=css_tag("css/jquery.textcomplete.css")?>
+		
+		<?if($_SERVER['XORC_ENV']=='development'){?>
+			<?=css_tag("css/phocon.less")?>
+		<?}else{?>
+			<?=css_tag("css/phocon.css")?>
+		<?}?>
+		
+		<?=js_tag("js/jquery.min.js")?>
+		<?=js_tag('js/jquery-ui-1.11.3.custom/jquery-ui.min.js')?>
+		<?=js_tag("js/jquery.textcomplete.min.js")?>
+		<?=js_tag("js/jquery.validate.min.js")?>
+		<?=js_tag("js/jquery.flex-images.min.js")?>
+		<?=js_tag("js/phocon.js")?>
+	</head>
+	
+<body id="admin">
+	
+	<?=render_part("navigation_admin")?>
+	
+	<div id="body" class="container">
+			
+		<div id="content" class="">
+			<!-- <h2><?=$title?></h2> -->
+		
+			<?if($msg=flash()){?><div class="alert alert-success" role="alert"><?=$msg?></div><?}?>
+		
+			<?=$content?>
+		
+		</div>
+		
+		<div id="footer" >
+			<?=render_part("footer")?>
+		</div>
+		
+	</div>
+
+</body>
+</html>

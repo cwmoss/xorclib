@@ -1,0 +1,11 @@
+<table class="zeta">
+<? while($binary=$list->next()){
+	$c++;	$css=($c % 2)?"odd":"even";
+?>
+<tr class="<?=$css?>">
+	<td><?=link_to("edit", "edit", $binary->prop['id'])?></td>
+	<td><?=$binary->prop['data']?></td>
+
+</tr>
+<? } ?>
+</table>

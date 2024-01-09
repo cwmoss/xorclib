@@ -1,0 +1,11 @@
+<table class="zeta">
+<? while($keyboard=$list->next()){
+	$c++;	$css=($c % 2)?"odd":"even";
+?>
+<tr class="<?=$css?>">
+	<td><?=link_to("edit", "edit", $keyboard->prop['key_number'])?></td>
+	<td><?=$keyboard->prop['name']?></td>
+
+</tr>
+<? } ?>
+</table>

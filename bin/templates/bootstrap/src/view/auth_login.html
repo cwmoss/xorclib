@@ -1,0 +1,59 @@
+
+
+
+<? $f = new Xorc_objectform($login, 'login', array("autoid"=>1)); ?>
+
+   
+
+
+<div id="" style="margin-top:200px;" class="container">
+
+<div class="row">
+	
+	<h4>Einloggen</h4>
+	
+	<?php $f = new Xorc_objectform($login, 'login', array("autoid"=>true)); ?>
+
+	<?=$f->error_messages()?>
+
+<?=$f->start('admin/user/index', array("class"=>"form-horizontal", 'id'=>'reg'))?>
+	
+
+   <fieldset class="odd">
+	
+		<?=row($f, "usr")?>
+
+		<?=row($f, "pwd", 'password')?>
+
+   </fieldset>
+
+      <?if(false && $failed==1) print render_part("captcha")?>
+      
+   <fieldset class="btn-group action">
+
+ 
+        <button type="Submit" name="post" value="Login" class="btn btn-primary">Login</button>
+        
+
+   </fieldset>
+
+   <fieldset>
+        <?=link_to("register/remind_password", 'Ich habe mein Passwort vergessen.')?>
+        
+         <?#=text_for(_('login hilfe'))?>
+        
+   </fieldset>
+</form>
+
+</div>
+</div>
+
+
+
+
+<script type="text/javascript" charset="utf-8">
+$('document').ready(function(){
+   
+});
+</script>
+

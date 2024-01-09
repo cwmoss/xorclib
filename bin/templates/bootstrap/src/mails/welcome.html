@@ -1,0 +1,17 @@
+
+   <p>Hallo <?=$u->name?>,</p>
+   <p>
+		vielen Dank für Deine Anmeldung zum Fotowettbewerb "<?=$contest->title?>".
+		Um die Registrierung zu bestätigen und Deinen Zugang zu aktivieren, klick bitte auf den folgenden Link:
+	</p>
+	
+	<p style="text-align:center;font-weight:bold;">
+		<?=link_to('register/confirm', 'Registrierung bestätigen', array('+'=>'', 'e'=>$u->email, 't'=>$u->token))?>
+	</p>
+	
+<p>
+	Wenn Du nicht am Fotowettbewerb teilnehmen möchtest und keine Registrierung vorgenommen hast, ignoriere diese Nachricht einfach.
+</p>
+<p>
+	Bitte leite diese E-Mail aus Sicherheitsgründen an niemanden weiter.
+</p>

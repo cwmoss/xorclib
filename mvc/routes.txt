@@ -1,0 +1,2 @@
+/					simple/index
+$controller/$action		$controller/$action

@@ -1,0 +1,12 @@
+<table class="zeta">
+<? while($<model-var>=$list->next()){
+	$c++;	$css=($c % 2)?"odd":"even";
+?>
+<tr class="<?=$css?>">
+	<td><?=link_to("edit", "edit", $<model-var>->prop['<model-id>'])?></td>
+<loop columns>
+	<td><?=<value>?></td>
+</loop>
+</tr>
+<? } ?>
+</table>

@@ -1,0 +1,12 @@
+<table class="zeta">
+<? while($task=$list->next()){
+	$c++;	$css=($c % 2)?"odd":"even";
+?>
+<tr class="<?=$css?>">
+	<td><?=link_to("edit", "edit", $task->prop['id'])?></td>
+	<td><?=$task->prop['starting']?></td>
+	<td><?=$task->prop['ending']?></td>
+
+</tr>
+<? } ?>
+</table>

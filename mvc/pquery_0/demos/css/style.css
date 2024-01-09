@@ -1,0 +1,16 @@
+/* For Shopiing Cart  */
+img.products { float: left; width: 100px; height: 100px; margin-right: 10px; cursor: move; }
+div.cart { border: 1px solid rgb(232, 164, 0); padding: 8px; clear: both; background-color: white; width: 500px; }
+span.title { margin: 0pt; padding: 10px 0pt 0pt; font-size: 12px; color: rgb(68, 68, 68); font-weight: normal; }
+div#wastebin { border: 1px dashed rgb(136, 136, 136); padding: 8px; width: 500px; margin-top: 8px; height: 25px; color: rgb(204, 204, 204); font-size: 16px; font-weight: bold; text-align: center; }
+div.cart img { float: left; width: 32px; height: 32px; margin-right: 10px; }
+div.cart div { font-weight: normal; color: rgb(68, 68, 68); clear: left; }
+div.cart-active { background-color: rgb(255, 244, 216); }
+div.wastebin-active { border: 1px solid rgb(232, 164, 0); background-color: rgb(255, 244, 216); }
+
+/* For sortable list demo */
+#list { margin: 10px 0pt 0pt; padding: 0pt; list-style-type: none; width: 250px; }
+#list li { border: 1px solid rgb(136, 136, 136); margin: 0pt 0pt 4px; padding: 5px; cursor: move; }
+
+/* For todo list */
+

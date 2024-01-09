@@ -1,0 +1,14 @@
+<table class="zeta">
+<? while($developer=$list->next()){
+	$c++;	$css=($c % 2)?"odd":"even";
+?>
+<tr class="<?=$css?>">
+	<td><?=link_to("edit", "edit", $developer->prop['id'])?></td>
+	<td><?=$developer->prop['name']?></td>
+	<td><?=$developer->prop['salary']?></td>
+	<td><?=$developer->prop['created_at']?></td>
+	<td><?=$developer->prop['updated_at']?></td>
+
+</tr>
+<? } ?>
+</table>

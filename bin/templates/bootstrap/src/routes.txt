@@ -1,0 +1,2 @@
+/					<first-controller>
+$controller/$action/$id		$controller/$action	$id~(\w+)? $id=

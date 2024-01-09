@@ -1,0 +1,28 @@
+<h3>User bearbeiten</h3>
+
+<?php $f = new Xorc_objectform($euser, 'user', array("autoid"=>true)); ?>
+
+<?=$f->error_messages()?>
+
+<?=$f->start(array("save", $euser->id), array("class"=>"form-horizontal"))?>
+
+	<?=render_part('user_form', array("f"=>$f))?>
+
+<fieldset class="btn-group action">
+
+	<?=submit_tag("save", "Speichern", array('class'=>'btn btn-primary'))?><?=link_to('index', "Zurück", array(), array("class"=>"btn btn-default"));?>
+
+
+</fieldset>
+	
+<?=end_form_tag()?>
+
+
+<h6>User löschen</h6>
+
+<?=button_to('delete', "Löschen", $euser->id, array("class"=>"btn btn-default", "confirm"=>"Wollen Sie diesen User wirklich löschen?"));?>
+
+
+<?if($euser->images){?>
+	<?=render_part('image_grid', array('items'=>$euser->images))?>
+<?}?>

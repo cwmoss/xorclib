@@ -1,0 +1,20 @@
+<h4>Neuanmeldung</h4>
+
+<?php $f = new Xorc_objectform($registration, 'reg', array("autoid"=>true)); ?>
+
+<?=$f->error_messages()?>
+
+<?=$f->start("save", array("class"=>"form-horizontal", 'id'=>'reg'))?>
+
+	<?=render_part('register_form', array("f"=>$f))?>
+
+<fieldset class="btn-group action">
+
+	<?=submit_tag("save", "Anmeldung abschicken", array('class'=>'btn btn-primary'))?>
+
+
+</fieldset>
+	
+<?=end_form_tag()?>
+
+<?=render_part('validation', array('form'=>$f))?>

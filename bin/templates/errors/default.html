@@ -1,0 +1,12 @@
+<div id="error">
+	<p><?=$message?></p>
+<pre>
+<?
+ob_start();
+debug_print_backtrace();
+$trace=ob_get_clean();
+if($_SERVER['XORC_ENV']=="development") print wordwrap($trace, 50, "\n    ");
+?>
+</pre>
+	
+</div>

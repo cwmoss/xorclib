@@ -1,0 +1,9 @@
+{
+	"flag": {"1":"Nein","2":"Ja"},
+	"yn": {"1":"Ja","0":"Nein"},
+	"title": {"1":"Frau","2":"Herr"},
+	"userstatus": {"0":"registriert", "1":"bestätigt", "9":"gesperrt"},
+	
+	"userroles": "class:user::roles",
+	"countries": "class:xh::countrycodes(de,100)"
+}
