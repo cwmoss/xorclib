@@ -35,7 +35,7 @@ function create_crudviews($table, $ti, $template, $vars){
 	$tab=$vars['colnames'][$tname];
 	$idname=$vars['idnames'][$tname];
 	foreach($views as $v){
-	   if($v{0}=="_"){
+	   if($v[0]=="_"){
 	      $view=substr($v, 1);
 	      $part="_";
 	   }else{
