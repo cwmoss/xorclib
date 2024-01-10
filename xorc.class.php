@@ -14,6 +14,10 @@
 define('XORC_LIB_PATH', __DIR__);
 
 class Xorc {
+
+	public $approot;
+	public $base;
+
 	public $session_started = false;
 	public $perm;
 	public $classfilesuffix = ".php";	// additional filesuffix for classfiles 
@@ -23,12 +27,12 @@ class Xorc {
 	public $conf;
 	public $_inifile;
 
-	function __construct($inifile = "") {
-		if ($inifile === null) $init = false;
-		else $init = true;
-
+	function __construct($inifile = "", ?array $config = null) {
 		$this->include_path = dirname((string) $this->include_path);
 		$this->name = strtolower(static::class);
+
+		$this->approot = dirname(realpath($this->include_path . "/../"));
+		$this->base = $this->approot . "/src";
 
 		$confvar = strtoupper($this->name) . "_CONF";
 
@@ -41,22 +45,21 @@ class Xorc {
 				$inifile = "{$this->include_path}/{$inifile}";
 			}
 		}
-		#	print "INI $inifile ++++";
 		$this->confdir = dirname((string) $inifile);
 
-		if (!is_readable($inifile)) {
-			throw new Exception("missing or unreadable ini file. please check for environment {$confvar} or {$this->name}.ini");
+		// wir brauchen eine gültige ini datei
+		if (is_null($config)) {
+			if (!is_readable($inifile)) {
+				throw new Exception("missing or unreadable ini file. please check for environment {$confvar} or {$this->name}.ini");
+			}
+			$conf = parse_ini_file($inifile, true);
+			if ($conf === false) {
+				throw new Exception("ini file parse error. please check " . basename($inifile));
+			}
+			$this->conf = $conf;
+			$this->_inifile = $inifile;
 		}
-		$conf = parse_ini_file($inifile, true);
-		if ($conf === false) {
-			throw new Exception("ini file parse error. please check " . basename($inifile));
-		}
-		$this->conf = $conf;
-		$this->_inifile = $inifile;
-
-		#print "\n\n\n xorc constructor ($init) \n\n\n";
-
-		if ($init) $this->init_from_conf();
+		$this->init_from_conf($config);
 	}
 
 	// should be overwritten
@@ -68,8 +71,10 @@ class Xorc {
 
 		if (is_null($conf)) $conf = $this->conf;
 		else $this->conf = $conf;
-		#      log_error($conf);
-		#setlocale("LC_ALL", "de_DE");
+
+		if (($this->conf['general']['var'][0] ?? '') != "/") {
+			$this->conf['general']['var'] = $this->approot . "/" . ($this->conf['general']['var'] ?? 'var');
+		}
 
 		if ($conf['general']['locale'] ?? null) setlocale(LC_ALL, $conf['general']['locale']);
 		if (isset($conf['general']['timezone'])) {

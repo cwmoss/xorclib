@@ -27,7 +27,6 @@ if (!defined('XORCAPP_NODISPATCH')) define('XORCAPP_NODISPATCH', false);
 class xorcapp extends Xorc {
 	public static $inst;
 
-	public $approot;
 	public $conf;
 	public $router;
 	public $req;
@@ -43,8 +42,6 @@ class xorcapp extends Xorc {
 	public $ctrl_name;
 
 	public $current_action;
-
-	public $base;
 
 	public $auth;
 	public $user;
@@ -79,14 +76,11 @@ class xorcapp extends Xorc {
 			//			print get_class(self);
 
 			if (!$klas) $klas = self::class;
-			self::$inst = new $klas(null);
+			self::$inst = new $klas(null, $conf);
 
 			#   vorgezogen: ab base() kann dann korrekt geloggt werden.
-			self::$inst->base();
-
-
-
-			self::$inst->init_from_conf($conf);
+			// self::$inst->base();
+			##self::$inst->init_from_conf($conf);
 		}
 		self::$inst->env();
 		self::$inst->req();
@@ -102,18 +96,6 @@ class xorcapp extends Xorc {
 
 		//		print_r(self::$inst);
 		return self::$inst;
-	}
-
-	function base() {
-		#	   log_error("BASE-ORIG:".$this->include_path."/../");
-		$this->approot = dirname(realpath($this->include_path . "/../"));
-		$this->base = $this->approot . "/src";
-		#		print "### CONF ".$this->approot."--";
-		#		log_error("### CONF++VAR-PATH: ".$this->approot);
-		if (($this->conf['general']['var'][0] ?? '') != "/") {
-			$this->conf['general']['var'] = $this->approot . "/" . ($this->conf['general']['var'] ?? 'var');
-		}
-		#		log_error("BASE-0: ".self::$inst->base);
 	}
 
 	function dispatch() {
