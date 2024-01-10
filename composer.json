@@ -8,8 +8,7 @@
     "type": "library",
     "authors": [
         {
-            "name": "Robert Wagner",
-            "email": "rw@20sec.net"
+            "name": "Robert Wagner"
         }
     ],
     "require": {}
