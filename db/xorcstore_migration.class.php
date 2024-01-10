@@ -5,10 +5,7 @@ class Xorcstore_Migration {
    var $db;
 
    /**
-    *@var ADODB_DataDict
-    *
-    *    ACHTUNG!!! auf php4 kompat. achten!!! keine private/protected scheisse hier!
-    *
+    * @var ADODB_DataDict
     */
    var $dict;
    var $dry = false;
@@ -80,6 +77,7 @@ class Xorcstore_Migration {
    }
 
    function type_for_column($table, $column) {
+      $schema = "";
       $this->dict->connection->_findschema($table, $schema);
 
       if ($schema) {
@@ -463,6 +461,7 @@ class Xorcstore_Migration {
    function table($tab, $short = false) {
       if ($short) {
          $nameL = explode("_", $tab);
+         $name = "";
          foreach ($nameL as $n) {
             $name .= substr($n, 0, 3);
          }
