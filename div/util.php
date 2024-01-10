@@ -69,7 +69,6 @@ function xorc_fetch_url($url, $proxy = null, $file = null, $verbose = false, &$h
 		}
 		$doc = $pp['path'];
 		if ($pp['query']) $doc .= "?" . $pp['query'];
-		# Authorization: BASIC SFRNTFdvcmxkOkludGVybmV0
 		if ($pp['user']) {
 			$auth = "Authorization: Basic " . base64_encode($pp['user'] . ":" . $pp['pass']) . "\r\n";
 		}
