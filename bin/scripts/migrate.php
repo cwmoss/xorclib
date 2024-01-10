@@ -3,13 +3,13 @@
 include_once(XORC_LIB_PATH . "/db/xorcstore_migration.class.php");
 include_once(XORC_LIB_PATH . "/db/xorcstore_connector.class.php");
 
-$command = $margs[0];
+$command = $margs[0] ?? "";
 
-$migdir = $opts['migrations'];
+$migdir = $opts['migrations'] ?? "";
 if (!$migdir) $migdir = dirname($mypath) . "/db";
 
 $con = null;
-if ($opts['db']) {
+if ($opts['db'] ?? null) {
    $con = new XorcStore_Connector("_db", ['dsn' => $opts['db'], 'prefix' => $opts['prefix']]);
 }
 if ($command != 'new') {
@@ -90,7 +90,8 @@ if ($command == "dump" || $command == "dumpdata" || $command == "dumpdatacsv") {
       $dest = $mat[1];
       if ($margs[1] == "dry") $dry = true;
    } else {
-      $dest = array_pop(array_keys($versions));
+      $versions_keys = array_keys($versions);
+      $dest = array_pop($versions_keys);
    }
 
    print "-- START MIGRATION FROM VERSION $src TO $dest => dry? $dry\n";

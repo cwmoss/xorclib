@@ -16,9 +16,9 @@ class Xorc_Request {
 			$path = str_replace(
 				dirname($_SERVER['SCRIPT_NAME']) . "/",
 				"",
-				(string) $_SERVER['REQUEST_URI']
+				(string) $_SERVER['REQUEST_URI'] ?? ""
 			);
-			if (!$path[0] == "/") $path = "/" . $path;		# always starting with *one* slash
+			if (!$path || $path[0] != "/") $path = "/" . $path;		# always starting with *one* slash
 			// alles hinter einem ? loswerden
 			if (($ok = strpos($path, '?')) !== false) {
 				$path = substr($path, 0, $ok);
@@ -33,7 +33,7 @@ class Xorc_Request {
 		//		$this->path_with_query=$this->path;
 		//		if($_SERVER['QUERY_STRING']) $this->path_with_query.="?".$_SERVER['QUERY_STRING'];
 
-		$this->path_with_query = $_SERVER["REQUEST_URI"];
+		$this->path_with_query = $_SERVER["REQUEST_URI"] ?? "";
 		#		print_r($this); exit;
 		$this->p = $_REQUEST ? $_REQUEST : array();
 		if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {

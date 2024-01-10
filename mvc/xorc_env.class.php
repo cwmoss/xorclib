@@ -15,7 +15,7 @@ class Xorc_Env {
 			$this->proto = XorcApp::$inst->conf['general']['proto'];
 		}
 		$this->server = isset($_SERVER['HTTP_X_FORWARDED_HOST']) ? $_SERVER['HTTP_X_FORWARDED_HOST'] : "";   # via proxy?
-		if (!$this->server) $this->server = $_SERVER['HTTP_HOST'];
+		if (!$this->server) $this->server = $_SERVER['HTTP_HOST'] ?? 'localhost';
 
 		if (isset($conf['urlrewrite']) && $conf['urlrewrite']) {
 			$this->httpbase = dirname($_SERVER['SCRIPT_NAME']);
