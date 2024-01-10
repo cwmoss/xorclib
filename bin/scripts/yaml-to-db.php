@@ -1,6 +1,6 @@
 <?php
 $src = $margs[0];
-$dest = $margs[1];
+$dest = $margs[1] ?? null;
 
 if (!$src) die("please provide source yaml file.\n");
 if (!$dest) {
@@ -48,8 +48,8 @@ function merge_docs($f1, $f2) {
    $merge = [];
    $docs = array_unique(array_merge(array_keys($f1), array_keys($f2)));
    foreach ($docs as $doc) {
-      $d1 = $f1[$doc] ?: [];
-      $d2 = $f2[$doc] ?: [];
+      $d1 = $f1[$doc] ?? [];
+      $d2 = $f2[$doc] ?? [];
       $merge[$doc] = array_merge($d1, $d2);
    }
    return $merge;
