@@ -16,7 +16,7 @@ class Xorc_Request {
 			$path = str_replace(
 				dirname($_SERVER['SCRIPT_NAME']) . "/",
 				"",
-				(string) $_SERVER['REQUEST_URI'] ?? ""
+				(string) ($_SERVER['REQUEST_URI'] ?? "")
 			);
 			if (!$path || $path[0] != "/") $path = "/" . $path;		# always starting with *one* slash
 			// alles hinter einem ? loswerden
