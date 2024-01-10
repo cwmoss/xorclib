@@ -88,7 +88,7 @@ if ($command == "dump" || $command == "dumpdata" || $command == "dumpdatacsv") {
 
    if (preg_match("/^version=(\d+)$/", (string) $command, $mat)) {
       $dest = $mat[1];
-      if ($margs[1] == "dry") $dry = true;
+      if (($margs[1] ?? null) == "dry") $dry = true;
    } else {
       $versions_keys = array_keys($versions);
       $dest = array_pop($versions_keys);
