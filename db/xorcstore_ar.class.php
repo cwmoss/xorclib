@@ -1367,6 +1367,7 @@ class Xorcstore_AR implements Countable, JsonSerializable {
     }
 
     public function select_all($attr = "*", $q = "", $fq = "") {
+        $s = "";
         $con = &$this->connection();
         if ($fq) {
             $sql = $fq;
