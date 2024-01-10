@@ -110,8 +110,8 @@ class xorcapp extends Xorc {
 		$this->base = $this->approot . "/src";
 		#		print "### CONF ".$this->approot."--";
 		#		log_error("### CONF++VAR-PATH: ".$this->approot);
-		if ($this->conf['general']['var'][0] != "/") {
-			$this->conf['general']['var'] = $this->approot . "/" . $this->conf['general']['var'];
+		if (($this->conf['general']['var'][0] ?? '') != "/") {
+			$this->conf['general']['var'] = $this->approot . "/" . ($this->conf['general']['var'] ?? 'var');
 		}
 		#		log_error("BASE-0: ".self::$inst->base);
 	}

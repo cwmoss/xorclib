@@ -44,7 +44,13 @@ class Xorc {
 		#	print "INI $inifile ++++";
 		$this->confdir = dirname((string) $inifile);
 
-		$conf = @parse_ini_file($inifile, true);
+		if (!is_readable($inifile)) {
+			throw new Exception("missing or unreadable ini file. please check for environment {$confvar} or {$this->name}.ini");
+		}
+		$conf = parse_ini_file($inifile, true);
+		if ($conf === false) {
+			throw new Exception("ini file parse error. please check " . basename($inifile));
+		}
 		$this->conf = $conf;
 		$this->_inifile = $inifile;
 
@@ -74,7 +80,7 @@ class Xorc {
 		if (!$tz) $tz = "Europe/Berlin";
 		date_default_timezone_set($tz);
 
-		if ($conf['general']['use_db']) {
+		if ($conf['general']['use_db'] ?? null) {
 			if ($conf['general']['use_db'] == 1) $dbv = "adodb";
 			else $dbv = $conf['general']['use_db'];
 			define('XORC_DB_ADODB_VERSION', $dbv);

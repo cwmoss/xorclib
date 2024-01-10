@@ -12,7 +12,7 @@ class Xorc_Request {
 	function __construct() {
 		//		print_r($_SERVER);
 		#		log_error("REQ-CLASS: ".$_SERVER['SCRIPT_NAME']."--".$_SERVER['REQUEST_URI']);
-		if (XorcApp::$inst->conf['general']['urlrewrite']) {
+		if (xorcapp::$inst->conf['general']['urlrewrite'] ?? null) {
 			$path = str_replace(
 				dirname($_SERVER['SCRIPT_NAME']) . "/",
 				"",
@@ -27,7 +27,7 @@ class Xorc_Request {
 			#			print $_SERVER['REQUEST_URI']; print "#".$_SERVER['SCRIPT_NAME'];
 			# print_r($this);
 		} else {
-			$this->path = $_SERVER['PATH_INFO'];
+			$this->path = $_SERVER['PATH_INFO'] ?? '';
 		}
 
 		//		$this->path_with_query=$this->path;
