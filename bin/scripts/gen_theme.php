@@ -27,11 +27,8 @@ $dirs = array(
 
 );
 
-
-
 foreach ($dirs as $d) {
    print(">> creating directory $d");
-   $d = "$base/$d";
    if (is_dir($d)) print(" .. exists\n");
    else {
       mkdir($d, 0775);
