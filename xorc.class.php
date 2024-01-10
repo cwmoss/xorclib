@@ -50,7 +50,7 @@ class Xorc {
 		// wir brauchen eine gültige ini datei
 		if (is_null($config)) {
 			if (!is_readable($inifile)) {
-				throw new Exception("missing or unreadable ini file. please check for environment {$confvar} or {$this->name}.ini");
+				throw new Exception("missing or unreadable ini file. please check for environment variable {$confvar} or default {$this->name}_prod.ini");
 			}
 			$conf = parse_ini_file($inifile, true);
 			if ($conf === false) {
