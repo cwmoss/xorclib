@@ -430,10 +430,11 @@ class xorcapp extends Xorc {
 		// evtl. ausloggen?
 		if ($this->req->p['logout']) $_auth->logout();
 		$this->auth = $_auth;
-		#print_r($conf['general']['use_l10n']);
-		if ($this->conf['general']['use_l10n'] == "afterauth") {
-			$this->use_l10n($_SESSION['xorclang']);
-		}
+
+		// removed, still here for reference
+		// if ($this->conf['general']['use_l10n'] == "afterauth") {
+		//	$this->use_l10n($_SESSION['xorclang']);
+		// }
 		return $_auth;
 	}
 

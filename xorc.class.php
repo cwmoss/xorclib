@@ -5,6 +5,20 @@
  *
  * konfiguration etc.
  *
+ * [general]
+ * use_db=1
+ * nolog=1
+ * urlrewrite=1
+ * error_reporting=null
+ * 
+ * timezone
+ * locale
+ * charset
+ * routingbug
+ * proto
+ * log
+ * 
+ * 
  * @author Robert Wagner
  * @version $Id: xorc.class.php 569 2024-01-05 19:42:48Z rw $
  * @copyright 20sec.net, 28 January, 2006
@@ -52,7 +66,7 @@ class Xorc {
 			if (!is_readable($inifile)) {
 				throw new Exception("missing or unreadable ini file. please check for environment variable {$confvar} or default {$this->name}_prod.ini");
 			}
-			$conf = parse_ini_file($inifile, true);
+			$conf = parse_ini_file($inifile, true, INI_SCANNER_TYPED);
 			if ($conf === false) {
 				throw new Exception("ini file parse error. please check " . basename($inifile));
 			}
@@ -67,32 +81,33 @@ class Xorc {
 	}
 
 	public function init_from_conf($conf = null) {
-		#      log_error("INIT FROM CONF $this->_inifile");
-
 		if (is_null($conf)) $conf = $this->conf;
 		else $this->conf = $conf;
 
-		if (($this->conf['general']['var'][0] ?? '') != "/") {
-			$this->conf['general']['var'] = $this->approot . "/" . ($this->conf['general']['var'] ?? 'var');
-		}
+		$general = $conf['general'] ?? [];
+		$general += [
+			'timezone' => date_default_timezone_get(), // or better? "Europe/Berlin", 
+			'var' => 'var', 'use_db' => 1,
+			'urlrewrite' => 1, 'nolog' => 1, 'use_session' => 0, 'error_reporting' => null
+		];
 
-		if ($conf['general']['locale'] ?? null) setlocale(LC_ALL, $conf['general']['locale']);
-		if (isset($conf['general']['timezone'])) {
-			$tz = $conf['general']['timezone'];
-		} else {
-			$tz = @date_default_timezone_get();
+		if ($general['var'][0] != "/") {
+			$general['var'] = $this->approot . "/" . $general['var'];
 		}
-		if (!$tz) $tz = "Europe/Berlin";
-		date_default_timezone_set($tz);
+		// set var early
+		$this->conf['general'] = $general;
 
-		if ($conf['general']['use_db'] ?? null) {
+		if ($general['locale'] ?? null) setlocale(LC_ALL, $general['locale']);
+		date_default_timezone_set($general['timezone']);
+
+		if ($general['use_db']) {
 			$this->use_db();
 		}
 
-		if (@$conf['general']['use_session']) $this->use_session();
+		if ($general['use_session']) $this->use_session();
 
-		if ($conf['general']['error_reporting'] || @$conf['general']['error_reporting'] === 0) {
-			error_reporting($conf['general']['error_reporting']);
+		if (!is_null($general['error_reporting'])) {
+			error_reporting($general['error_reporting']);
 		}
 
 		$this->load_classes();
@@ -220,7 +235,7 @@ ini_set('session.save_path', $session_save_path);
 	}
 
 	function log($msg, $file = "") {
-		if (@$this->conf['general']['nolog']) return;
+		if ($this->conf['general']['nolog']) return;
 		if (!$file) {
 			if (!@$this->conf['general']['log']) {
 				$file = $this->conf['general']['var'] . "/" . $this->name . ".log";
