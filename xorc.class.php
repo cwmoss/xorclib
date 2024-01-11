@@ -92,23 +92,12 @@ class Xorc {
 			$this->use_db();
 		}
 
-		#		print "RUNAPP:". memory_get_usage()."\n";
-		if (@$conf['general']['use_ldap']) $this->use_ldap();
-		if (@$conf['general']['use_core']) $this->use_core();
-		if (@$conf['general']['use_form']) $this->use_form();
-		if (@$conf['general']['use_template']) $this->use_template();
 		if (@$conf['general']['use_session']) $this->use_session();
 
-		if (@$conf['general']['use_gimmicks']) $this->use_gimmicks();
-		if (@$conf['general']['use_l10n']) $this->use_l10n();
-
-		if (@$conf['general']['error_reporting'] || @$conf['general']['error_reporting'] === 0) {
-			$err_rep = 0;
-			@eval('$err_rep = ' . $conf['general']['error_reporting'] . ';');
-			error_reporting($err_rep);
+		if ($conf['general']['error_reporting'] || @$conf['general']['error_reporting'] === 0) {
+			error_reporting($conf['general']['error_reporting']);
 		}
 
-		#		print "RUNAPP:". memory_get_usage()."\n";
 		$this->load_classes();
 	}
 
@@ -152,52 +141,6 @@ class Xorc {
 			//				$this->conf[$section][$var.'.debug'],
 			//				$this->conf[$section][$var.'.prefix'],
 			//				$this->conf[$section][$var.'.persistent']);
-		}
-	}
-
-	function use_ldap($dsn = "", $debug = "") {
-		$ldapconnect = null;
-		if (!$dsn) {
-			$this->connect_ldap_section('ldap');
-		} else {
-			$ldapconnect($dsn, "_ldap", $debug);
-		}
-	}
-
-	function connect_ldap_section($section) {
-		foreach ($this->conf[$section] as $var => $dsn) {
-			$this->ldapconnect($dsn, $var);
-		}
-	}
-
-	function use_form() {
-		#	include_once(XORC_LIB_PATH . "/form/xorcform.class.php");
-	}
-
-	function use_core() {
-		//		include_once(XORC_LIB_PATH."/core/Attachment.class");
-		//		include_once(XORC_LIB_PATH."/core/Linkage.class");
-	}
-
-	function use_template() {
-		if ($this->conf['general']['use_template'] == 'smarty3') {
-			include_once(XORC_LIB_PATH . "/tpl/Smarty3/libs/Smarty.class.php");
-		} else {
-			include_once(XORC_LIB_PATH . "/tpl/Smarty/libs/Smarty.class.php");
-		}
-	}
-
-	function use_xpath() {
-		include_once(XORC_LIB_PATH . "/xml/XPath.class.php");
-	}
-
-	function use_yaml() {
-		if (str_starts_with(PHP_VERSION, "5")) {
-			#include_once(XORC_LIB_PATH."/text/spyc-0.4.5-svn/spyc.php");
-			include_once(XORC_LIB_PATH . "/text/spyc-0.2.5/spyc.php5");
-			#include_once(XORC_LIB_PATH."/text/spyc-0.5/spyc.php");
-		} else {
-			include_once(XORC_LIB_PATH . "/text/spyc-0.2.5/spyc.php");
 		}
 	}
 
@@ -259,53 +202,6 @@ ini_set('session.save_path', $session_save_path);
 		}
 	}
 
-	function start_auth($prefs = "") {
-		if (!$prefs) $prefs = [];
-
-		include_once(XORC_LIB_PATH . "/auth/Perm.class");
-		include_once(XORC_LIB_PATH . "/auth/auth.class.php");
-		if ($this->conf['auth']['classname']) {
-			$path = dirname((string) $this->conf['auth']['classname']);
-			$this->conf['auth']['classname'] = basename((string) $this->conf['auth']['classname']);
-			if ($path) $path .= "/";
-			include_once("{$this->include_path}/$path{$this->conf['auth']['classname']}.class$this->classfilesuffix");
-		}
-		$this->perm = new Perm($this->conf['auth']['perms']);
-
-		if ($prefs['optional'] && !$_COOKIE[$this->conf['session']['name']]) {
-			$_auth = new $this->conf['auth']['classname']($this->conf['auth']);
-			$_auth->optional = true;
-		} else {
-			if (!$this->session_started) $this->start_session();
-
-			$_auth = $this->_get_session_var("_auth");
-
-			if (!isset($_auth)) {
-				$_auth = new $this->conf['auth']['classname']($this->conf['auth']);
-				$_SESSION["_auth"] = $_auth;
-			}
-		}
-
-		// waehrend der lebenszeit der $_auth variable koennen sich konfigurationsdaten aendern
-		//		z.b. die login/ logout seiten je nach der zuletzt (zuerst) benutzten seite eines
-		//		angebots.
-
-		$_auth->set_conf($this->conf['auth']);
-
-		if ($prefs['optional']) {
-			$ok = $_auth->is_valid(true);
-			if (!$ok) {
-				$_auth->make_loginblock();
-			} else {
-				$this->start_session();
-				$_SESSION["_auth"] = $_auth;
-			}
-		} else {
-			$_auth->is_valid();		// page terminates if not authorized
-		}
-		return $_auth;
-	}
-
 	function _get_session_var($name) {
 		if (isset($_SESSION)) {
 			$var = &$_SESSION[$name];
@@ -313,63 +209,6 @@ ini_set('session.save_path', $session_save_path);
 			$var = &$GLOBALS['HTTP_SESSION_VARS'][$name];
 		}
 		return $var;
-	}
-
-	function use_gimmicks() {
-		include_once(XORC_LIB_PATH . "/div/util.php");
-		include_once(XORC_LIB_PATH . "/div/Filer.class");
-		include_once(XORC_LIB_PATH . "/div/StaticPicture.class");
-	}
-
-	function use_l10n($lang = "") {
-		#echo "LLLL";
-		#print_r($_GLOBALS);
-		if (!$lang) $lang = $this->conf['general']['locale'];
-		if (function_exists('bindtextdomain')) {
-			#echo $this->include_path;
-			#echo $lang;
-			$ok = setlocale(LC_MESSAGES, $lang);
-			#var_dump($ok); 
-			$ok = bindtextdomain($this->name, $this->include_path . "/locale");
-			#var_dump($ok); 
-			$ok = bind_textdomain_codeset($this->name, 'UTF-8');
-			#var_dump($ok); 
-			$ok = textdomain($this->name);
-			#var_dump($ok); 
-		} else {
-			include_once(XORC_LIB_PATH . "/l10n/php-gettext-1.0.10/streams.php");
-			include_once(XORC_LIB_PATH . "/l10n/php-gettext-1.0.10/gettext.php");
-			$langfile = $this->include_path . "/locale/{$lang}/LC_MESSAGES/{$this->name}.mo";
-			$GLOBALS['l10n'] = new gettext_reader($fr = new FileReader($langfile));
-		}
-		include_once(XORC_LIB_PATH . "/l10n/l10n.php");
-	}
-
-	function ldapconnect($dsn, $gvar, $debug = false) {
-		global ${$gvar};
-		$dn = $gvar . "_dn";
-		global ${$dn};
-		global $LDAP_CONNECT_OPTIONS;
-		$LDAP_CONNECT_OPTIONS = [["OPTION_NAME" => LDAP_OPT_DEREF, "OPTION_VALUE" => 2], ["OPTION_NAME" => LDAP_OPT_SIZELIMIT, "OPTION_VALUE" => 100], ["OPTION_NAME" => LDAP_OPT_TIMELIMIT, "OPTION_VALUE" => 30], ["OPTION_NAME" => LDAP_OPT_PROTOCOL_VERSION, "OPTION_VALUE" => 3], ["OPTION_NAME" => LDAP_OPT_ERROR_NUMBER, "OPTION_VALUE" => 13], ["OPTION_NAME" => LDAP_OPT_REFERRALS, "OPTION_VALUE" => FALSE], ["OPTION_NAME" => LDAP_OPT_RESTART, "OPTION_VALUE" => FALSE]];
-		if (defined('XORC_DB_ADODB_VERSION')) {
-			$dbv = XORC_DB_ADODB_VERSION;
-		} else {
-			$dbv = "adodb";
-		}
-		include_once(XORC_LIB_PATH . "/db/$dbv/adodb-errorhandler.inc.php");
-		include_once(XORC_LIB_PATH . "/db/$dbv/adodb.inc.php");
-		[$driver, $host, $user, $pass, $db] = explode(":", (string) $dsn);
-		//print ("$driver, $host, $user, $pass, $db");
-		//echo $dn;
-		${$dn} = $db;
-		//echo $db;
-		${$gvar} = ldap_connect($host);
-		ldap_set_option(${$gvar}, LDAP_OPT_PROTOCOL_VERSION, 3);
-		ldap_bind(${$gvar}, $user, $pass);
-		//$$gvar = NewADOConnection($driver);
-		//$$gvar->debug = true;
-		//$$gvar->Connect($host, $user, $pass, '');
-
 	}
 
 	function start_session() {
@@ -416,10 +255,6 @@ ini_set('session.save_path', $session_save_path);
 		}
 
 		$this->session_started = true;
-	}
-
-	function version() {
-		return join("", file(XORC_LIB_PATH . "/VERSION"));
 	}
 
 	function log($msg, $file = "") {
