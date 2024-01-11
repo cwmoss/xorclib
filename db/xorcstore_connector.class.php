@@ -1,5 +1,7 @@
 <?php
 
+require_once(__DIR__ . "/xorcstore_ar.class.php");
+
 // wraps adodb connector object
 class driver {
 

@@ -1,4 +1,6 @@
 <?php
+require_once(__DIR__ . "/xorcstore_error.class.php");
+require_once(__DIR__ . "/xorcstore_validation.class.php");
 
 class Xorcstore_Nostore {
 
