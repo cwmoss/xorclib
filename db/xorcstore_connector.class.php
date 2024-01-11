@@ -1,24 +1,4 @@
 <?php
-if (defined('XORC_DB_ADODB_VERSION')) {
-   $dbv = XORC_DB_ADODB_VERSION;
-} else {
-   $dbv = "adodb";
-}
-//var_dump($dbv);exit;
-#include_once(XORC_LIB_PATH."/db/$dbv/adodb-errorhandler.inc.php");
-if ($dbv != 'composer') {
-   include_once(XORC_LIB_PATH . "/db/$dbv/adodb-exceptions.inc.php");
-   include_once(XORC_LIB_PATH . "/db/$dbv/adodb.inc.php");
-}
-
-#include_once(XORC_LIB_PATH . "/db/xorcstore.class.php");
-#include_once(XORC_LIB_PATH . "/db/Liste.class");
-#include_once(XORC_LIB_PATH . "/db/Seek2mysql.class");
-
-if (!defined('XORC_PHP_VERSION') || (defined('XORC_PHP_VERSION') && XORC_PHP_VERSION != 4)) {
-   include_once(XORC_LIB_PATH . "/db/xorcstore_ar.class.php");
-} else {
-}
 
 // wraps adodb connector object
 class driver {

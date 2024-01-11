@@ -86,9 +86,6 @@ class Xorc {
 		date_default_timezone_set($tz);
 
 		if ($conf['general']['use_db'] ?? null) {
-			if ($conf['general']['use_db'] == 1) $dbv = "adodb";
-			else $dbv = $conf['general']['use_db'];
-			define('XORC_DB_ADODB_VERSION', $dbv);
 			$this->use_db();
 		}
 
@@ -102,14 +99,6 @@ class Xorc {
 	}
 
 	function use_db($dsn = "", $debug = false, $prefix = "", $ac = null) {
-		//    if($this->conf['general']['use_db']=='ar'){
-		//       require_once XORC_LIB_PATH.'/ar/ActiveRecord.php';
-		//       $cfg = ActiveRecord\Config::instance();
-		// #     $cfg->set_model_directory('/path/to/your/model_directory');
-		//       $cfg->set_connections(array('development' =>
-		//         $this->conf['db']['_db']));
-		//       return;
-		//    }
 		define('ADODB_ASSOC_CASE', 0);
 		include_once(__DIR__ . "/db/xorcstore_connector.class.php");
 		if (!$dsn) {
@@ -120,9 +109,6 @@ class Xorc {
 	}
 
 	function connect_db_section($section) {
-
-
-
 
 		foreach ($this->conf[$section] as $var => $dsn) {
 			if (preg_match("/\.(debug|prefix|persistent|ignore_sequences|use_sequences|after_connect|charset)$/", (string) $var)) continue;
@@ -136,11 +122,6 @@ class Xorc {
 				'use_sequences' => @$this->conf[$section][$var . '.use_sequences'],
 				'after_connect' => @$this->conf[$section][$var . '.after_connect'], 'charset' => @$this->conf[$section][$var . '.charset']
 			]);
-
-			//			$this->dbconnect($dsn, $var, 
-			//				$this->conf[$section][$var.'.debug'],
-			//				$this->conf[$section][$var.'.prefix'],
-			//				$this->conf[$section][$var.'.persistent']);
 		}
 	}
 
@@ -181,25 +162,6 @@ ini_set('session.save_path', $session_save_path);
 			@$this->conf['session']['cookie_secure'],
 			true
 		);
-
-		if (isset($this->conf['session']['adodbsession_db'])) {
-			if (defined('XORC_DB_ADODB_VERSION')) {
-				$dbv = XORC_DB_ADODB_VERSION;
-			} else {
-				$dbv = "adodb";
-			}
-			include_once(XORC_LIB_PATH . "/db/$dbv/adodb-errorhandler.inc.php");
-			include_once(XORC_LIB_PATH . "/db/$dbv/adodb.inc.php");
-			[$GLOBALS['ADODB_SESSION_DRIVER'], $GLOBALS['ADODB_SESSION_CONNECT'], $GLOBALS['ADODB_SESSION_USER'], $GLOBALS['ADODB_SESSION_PWD'], $GLOBALS['ADODB_SESSION_DB']] = explode(":", (string) $this->conf['session']['adodbsession_db']);
-
-			$GLOBALS['ADODB_SESSION_TBL'] = $this->conf['session']['adodbsession_table'] ?: "sessions";
-			$datafield = $this->conf['adodbsession_table_datafield'] == "clob" ? "-clob" : "";
-			include_once(XORC_LIB_PATH . "/db/$dbv/session/adodb-session{$datafield}.php");
-			if ($this->conf['adodbsession_crypt'])
-				include_once(XORC_LIB_PATH . "/db/$dbv/session/adodb-cryptsession.php");
-			if (!$this->conf['session']['adodbsession_connect'] == 'pconnect')
-				adodb_sess_open(false, false, false);
-		}
 	}
 
 	function _get_session_var($name) {
