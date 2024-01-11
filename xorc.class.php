@@ -124,6 +124,7 @@ class Xorc {
 	}
 
 	function connect_db_section($section) {
+		if (!isset($this->conf[$section])) return;
 
 		foreach ($this->conf[$section] as $var => $dsn) {
 			if (preg_match("/\.(debug|prefix|persistent|ignore_sequences|use_sequences|after_connect|charset)$/", (string) $var)) continue;
