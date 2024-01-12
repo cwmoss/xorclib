@@ -40,12 +40,15 @@ class Xorc_Auth_Session_Data {
 class Xorc_Auth_Controller extends Xorc_Controller {
 
 	// value for rememberme cookie
-	var $remember = "";
-	var $cookieval = "";
-	var $sess = null;
-	var $conf = null;
+	public $remember = "";
+	public $cookieval = "";
+	public $sess = null;
+	public $conf = null;
+	public $referer;
+	public $uname;
+	public $id;
 
-	var $_enabled_actions = 'login logout';
+	public $_enabled_actions = 'login logout';
 
 	function __construct() {
 		/*
@@ -113,7 +116,7 @@ class Xorc_Auth_Controller extends Xorc_Controller {
 			$this->sess->referer = $_SERVER['REDIRECT_SCRIPT_URL'] ?? null;
 		}
 
-		if ($this->sess->state) {
+		if (isset($this->sess->state)) {
 			#print_r($this->sess);			
 			#			print " state ok";
 			if ($this->sess->is_expired()) {
