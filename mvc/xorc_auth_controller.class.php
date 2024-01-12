@@ -116,7 +116,7 @@ class Xorc_Auth_Controller extends Xorc_Controller {
 			$this->sess->referer = $_SERVER['REDIRECT_SCRIPT_URL'] ?? null;
 		}
 
-		if (isset($this->sess->state)) {
+		if ($this->sess && $this->sess->state) {
 			#print_r($this->sess);			
 			#			print " state ok";
 			if ($this->sess->is_expired()) {
@@ -125,7 +125,7 @@ class Xorc_Auth_Controller extends Xorc_Controller {
 
 				if ($soft) return false;
 				else {
-					if ($this->conf['erase']) $this->soft_logout();
+					if ($this->conf['erase'] ?? null) $this->soft_logout();
 					$this->sess->state = 0;
 					throw new XorcControllerNeedsAuthException("Authentification required.", 0, $this->conf['mvc'], "relogin");
 				}
