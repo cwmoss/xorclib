@@ -209,7 +209,7 @@ function tel_field_tag($name, $value, $opts = array()) {
 
 function options_for_select($items, $value = array(), $opts = array()) {
    $html = "";
-   $opts['compare_strings'] = $opts['compare_strings'] ? true : false;
+   $opts['compare_strings'] = (isset($opts['compare_strings']) && $opts['compare_strings']) ? true : false;
    if (!is_array($value)) $value = array($value);
    if (isset($opts['nullentry'])) $html .= sprintf('<option value="">%s</option>' . "\n", $opts['nullentry']);
 

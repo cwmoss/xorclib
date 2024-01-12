@@ -21,7 +21,7 @@ class Xorc_objectform {
    }
 */
    function start($url, $opts = array()) {
-      if (!$opts['class']) $opts['class'] = "xorcformdouble";
+      if (!isset($opts['class'])) $opts['class'] = "xorcformdouble";
       #      if(is_array($url)){
       #         $url[1]['id']=$this->obj->id;
       #      }else{
