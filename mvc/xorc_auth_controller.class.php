@@ -112,11 +112,11 @@ class Xorc_Auth_Controller extends Xorc_Controller {
 			return true;
 		}
 		// welche seite wollte ich ursprünglich sehen?
-		if ($_SERVER['REQUEST_METHOD'] == 'GET' && !$this->sess->referer) {
+		if ($_SERVER['REQUEST_METHOD'] == 'GET' && !($this->sess->referer ?? null)) {
 			$this->sess->referer = $_SERVER['REDIRECT_SCRIPT_URL'] ?? null;
 		}
 
-		if ($this->sess && $this->sess->state) {
+		if ($this->sess->state ?? null) {
 			#print_r($this->sess);			
 			#			print " state ok";
 			if ($this->sess->is_expired()) {
