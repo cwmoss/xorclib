@@ -1,7 +1,7 @@
 <?php
 # require_once("/home/data/projekte/webtape/lib/phpQuery-0.9.5.252/phpQuery/phpQuery.php");
-require_once("xorc/xml/phpQuery/phpQuery/phpQuery.php");
-require_once("xorc/mvc/filesys_helper.php");
+require_once(__DIR__ . "/phpQuery/phpQuery/phpQuery.php");
+require_once(__DIR__ . "/../mvc/filesys_helper.php");
 
 class JQ_Scraper {
 
