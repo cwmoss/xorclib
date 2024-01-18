@@ -155,7 +155,7 @@ class Xorc_Auth_Controller extends Xorc_Controller {
 
 			if ($ok) {
 				// ursprungsadresse zwischenspeichern und aus session löschen
-				$this->referer = $this->sess->referer;
+				$this->referer = $this->sess->referer ?? null;
 
 				/*
 			   zur sicherheit werden nach erfolgreichem login evtl. bestehende sessiondaten gelöscht
