@@ -171,13 +171,15 @@ ini_set('session.save_path', $session_save_path);
 		ini_set("session.gc_maxlifetime", $ttl);
 		$cpath = $this->conf['session']['cookie_path'] ?? "/";
 
-		session_set_cookie_params(
-			0,
-			$cpath,
-			@$this->conf['session']['cookie_domain'],
-			@$this->conf['session']['cookie_secure'],
-			true
-		);
+		//  lifetime, path, domain, secure, httponly and samesite.
+		session_set_cookie_params([
+			'lifetime' => 0,
+			'path' => $cpath,
+			'domain' => $this->conf['session']['cookie_domain'] ?? null,
+			'secure' => $this->conf['session']['cookie_secure'] ?? true,
+			'httponly' => true,
+			'samesite' => $this->conf['session']['cookie_samesite'] ?? 'Strict'
+		]);
 	}
 
 	function _get_session_var($name) {
