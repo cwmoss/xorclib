@@ -151,7 +151,7 @@ class Xorc_View {
 			#  log_error($c->layout);
 			return $this->_include($path . "/_layout{$layout}.page.html");
 		} else {
-			return $c->layout['top'] . $c->content . $c->layout['bottom'];
+			return ($c->layout['top'] ?? '') . $c->content . ($c->layout['bottom'] ?? '');
 		}
 	}
 
