@@ -414,6 +414,8 @@ class xorcstore_assoc_has_many_belongs_to_many extends xorcstore_assoc_collectio
 	var $jointable;
 	var $keyQ;
 	var $seq;
+	var $order;
+	
 	public $additional_props;
 
 	function __construct($mclass, $rel, $opts, $owner) {

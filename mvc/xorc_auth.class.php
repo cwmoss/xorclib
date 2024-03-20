@@ -296,7 +296,7 @@ Class Xorc_Auth {
 		XorcApp::$inst->terminate();
 	}
 
-	function show_refuse($screen="", $need){
+	function show_refuse($screen="", $need=""){
 	   
 	   $this->try_mvc_render("refuse");
 	   

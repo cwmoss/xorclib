@@ -2028,7 +2028,7 @@ class Xorcstore_AR implements Countable, JsonSerializable {
             #		print_r($rsC);
             # print_r($RS->fields);
             #	   $data=array_shift($RS->fields);
-            $fa = explode(",", $rsC[0]);
+            $fa = $rsC[0] ? explode(",", $rsC[0]): [];
             #		print_r(sizeof($fa));
             if (strlen($fa[0]) === 0) {
                 $rL[0] = $RS->fields[$selop];
