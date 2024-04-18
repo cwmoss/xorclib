@@ -2,7 +2,9 @@
 class Xorc_View {
 	public $auto = array("top", "bottom");
 
-	public $render_log = [];
+	public array $render_log = [];
+	public array $blocks = [];
+	public array $open_blocks = [];
 
 	function render($view = "", $params = []) {
 		$view = strtolower((string) $view);
@@ -45,6 +47,25 @@ class Xorc_View {
 		if (!$inc) return "NOT FOUND: $view";
 		$out = $this->_include($inc, $params, 0);
 		return $out;
+	}
+
+	function render_block(string $blockname, string $view, array $params = []) {
+		$this->blocks[$blockname] = $this->render_part($view, $params);
+	}
+
+	function start_block(string $blockname) {
+		$this->open_blocks[] = $blockname;
+		ob_start();
+	}
+
+	function end_block() {
+		$content = ob_get_clean();
+		$name = array_pop($this->open_blocks);
+		$this->blocks[$name] = $content;
+	}
+
+	function get_block(string $name): string {
+		return trim($this->blocks[$name] ?? "");
 	}
 
 	function find_partial($view) {

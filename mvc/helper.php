@@ -115,8 +115,25 @@ function themed_asset($url = null) {
 function is_ajax() {
    return Xorcapp::$inst->req->ajax ? true : false;
 }
+
 function render_part($tpl, $parms = array()) {
    return XorcApp::$inst->view->render_part($tpl, $parms);
+}
+
+function render_block(string $blockname, string $view, array $params = []) {
+   return XorcApp::$inst->view->render_block($blockname, $view, $params);
+}
+
+function start_block(string $blockname) {
+   return XorcApp::$inst->view->start_block($blockname);
+}
+
+function end_block() {
+   return XorcApp::$inst->view->end_block();
+}
+
+function get_block(string $name): string {
+   return XorcApp::$inst->view->get_block($name);
 }
 
 function render_classes($cf) {
