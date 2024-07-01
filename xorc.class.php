@@ -275,7 +275,12 @@ ini_set('session.save_path', $session_save_path);
 			if (!preg_match("!^/!", (string) $to)) {
 				$to = dirname((string) $_SERVER['SCRIPT_NAME']) . "/$to";
 			}
-			$proto = ($_SERVER['HTTPS'] == 'on') ? "https://" : "http://";
+			$https_enabled = false;
+
+			if(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') $https_enabled = true;
+			if(isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https') $https_enabled = true;
+
+			$proto = ($https_enabled) ? "https://" : "http://";
 			$to = $proto . $_SERVER['HTTP_HOST'] . $to;
 		}
 		header("Location: $to");
