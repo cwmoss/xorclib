@@ -11,7 +11,6 @@ class Xorc_Env {
 		$conf = XorcApp::$inst->conf['general'];
 
 		$this->proto = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') ? "https://" : "http://";
-		$this->proto = (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https')  ? "https://" : "http://";
 		if (isset($conf['proto'])) {
 			$this->proto = XorcApp::$inst->conf['general']['proto'];
 		}
