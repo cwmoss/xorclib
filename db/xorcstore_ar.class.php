@@ -900,6 +900,10 @@ class Xorcstore_AR implements Countable, JsonSerializable {
         if (is_string($val) && ctype_digit($val)) {
             return $val;
         }
+        if (is_string($val) && $val[0]=="-" && ctype_digit(substr($val, 1))) {
+            return $val;
+        }
+
         // invalid
         return "'--invalid numeric--'";
         # return $val;
