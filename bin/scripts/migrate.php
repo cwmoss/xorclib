@@ -80,6 +80,10 @@ if ($command == "dump" || $command == "dumpdata" || $command == "dumpdatacsv") {
    $dry = false;
    if ($command == "dry") $dry = true;
 
+   if ($command == "--with-init") {
+      $m->version_table();
+   }
+
    $versions = find_versions($migdir);
    $src = $m->version();
 

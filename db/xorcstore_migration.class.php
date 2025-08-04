@@ -485,8 +485,12 @@ class Xorcstore_Migration {
 
    // funktionen zur versionsverwaltung
    function version_table() {
-      $this->create_table("schema_information", "version I8 NOTNULL");
-      $this->db->Execute("INSERT INTO " . $this->table("schema_information") . " VALUES(0)");
+      // $this->create_table("schema_information", "version I8 NOTNULL");
+      $this->ddl("schema_information", "CREATE TABLE IF NOT EXISTS %TABLE% (version INT NOT NULL)");
+      $version = $this->version();
+      if (is_null($version)) {
+         $this->db->Execute("INSERT INTO " . $this->table("schema_information") . " VALUES(0)");
+      }
    }
 
    // funktionen zur sessionverwaltung (adodb sessiontable)
