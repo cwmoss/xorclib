@@ -87,8 +87,12 @@ class Xorc {
 		$general = $conf['general'] ?? [];
 		$general += [
 			'timezone' => date_default_timezone_get(), // or better? "Europe/Berlin", 
-			'var' => 'var', 'use_db' => 1,
-			'urlrewrite' => 1, 'nolog' => 1, 'use_session' => 0, 'error_reporting' => null
+			'var' => 'var',
+			'use_db' => 1,
+			'urlrewrite' => 1,
+			'nolog' => 1,
+			'use_session' => 0,
+			'error_reporting' => null
 		];
 
 		if ($general['var'][0] != "/") {
@@ -131,19 +135,24 @@ class Xorc {
 			#		print "connecting to $dsn";
 
 			new XorcStore_Connector($var, [
-				'dsn' => $dsn, 'debug' => @$this->conf[$section][$var . '.debug'],
+				'dsn' => $dsn,
+				'debug' => @$this->conf[$section][$var . '.debug'],
 				'prefix' => @$this->conf[$section][$var . '.prefix'],
 				'persistent' => @$this->conf[$section][$var . '.persistent'],
 				'ignore_sequences' => @$this->conf[$section][$var . '.ignore_sequences'],
 				'use_sequences' => @$this->conf[$section][$var . '.use_sequences'],
-				'after_connect' => @$this->conf[$section][$var . '.after_connect'], 'charset' => @$this->conf[$section][$var . '.charset']
+				'after_connect' => @$this->conf[$section][$var . '.after_connect'],
+				'charset' => @$this->conf[$section][$var . '.charset']
 			]);
 		}
 	}
 
 	function use_session($name = "") {
 		#	   if(PHP_SAPI=='cli') return;
-		if (!$name) $name = $this->conf['session']['name'];
+		if (!is_array($this->conf['session'] ?? null)) {
+			$this->conf['session'] = [];
+		}
+		if (!$name) $name = $this->conf['session']['name'] ?? "";
 		if (!$name) $name = "XORC";
 		$this->conf['session']['name'] = $name;
 		#		log_error("SETTING SESSION NAME TO $name");
@@ -277,8 +286,8 @@ ini_set('session.save_path', $session_save_path);
 			}
 			$https_enabled = false;
 
-			if(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') $https_enabled = true;
-			if(isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https') $https_enabled = true;
+			if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') $https_enabled = true;
+			if (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https') $https_enabled = true;
 
 			$proto = ($https_enabled) ? "https://" : "http://";
 			$to = $proto . $_SERVER['HTTP_HOST'] . $to;
