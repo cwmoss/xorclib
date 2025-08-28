@@ -44,7 +44,7 @@ class xorc_controller2 {
         if ($this->layout) $this->layout($this->layout);
     }
 
-    function _init_before($action) {
+    public function _init_before($action) {
         if ($this->before_filter) {
             foreach ($this->before_filter as $f) {
                 $this->$f();
@@ -53,11 +53,11 @@ class xorc_controller2 {
         return true;
     }
 
-    function _init() {
+    public function _init() {
         return;        // you could init some forms here
     }
 
-    function link($to, $text, $parms = array()) {
+    public function link($to, $text, $parms = array()) {
         return sprintf(
             '<a href="%s">%s</a>',
             $this->url($to, $parms),
@@ -65,7 +65,7 @@ class xorc_controller2 {
         );
     }
 
-    function url($to = "", $parms = array()) {
+    public function url($to = "", $parms = array()) {
         if (!$to) {
             $to = XorcApp::$inst->ctrl_name . "/" . XorcApp::$inst->act;
         } else {
@@ -80,14 +80,14 @@ class xorc_controller2 {
         return XorcApp::$inst->router->url_for($to, $parms);
     }
 
-    function redirect($to = "", $parms = array()) {
+    public function redirect($to = "", $parms = array()) {
         #	return $to;
         if ($to && $to != "/" && $to[0] == "/") $url = $to;
         else $url = $this->url($to, $parms);
         XorcApp::$inst->resp->redirect($url);
     }
 
-    function foreward($to) {
+    public function foreward($to) {
         if (!preg_match("!/!", $to)) {
             $c = XorcApp::$inst->ctrl_name;
             $a = $to;
@@ -97,25 +97,25 @@ class xorc_controller2 {
         XorcApp::$inst->foreward($c, $a);
     }
 
-    function render($cv) {
+    public function render($cv) {
         XorcApp::$inst->render($cv);
     }
 
-    function start_auth($prefs = array()) {
+    public function start_auth($prefs = array()) {
         return XorcApp::$inst->start_auth($prefs);
     }
 
-    function redirect_referer() {
+    public function redirect_referer() {
         $to = $_SERVER['HTTP_REFERER'];
         XorcApp::$inst->resp->redirect($to);
     }
 
-    function layout($l = -1) {
+    public function layout($l = -1) {
         if ($l != -1) $this->_layoutname = $l;
         return $this->_layoutname;
     }
 
-    function layout_path($path = -1) {
+    public function layout_path($path = -1) {
         if ($path != -1) {
             #	      log_error("### SETTING layoutpath {$this->_layoutpath} ==> $path ##");
             $this->_layoutpath = $path;
@@ -123,17 +123,17 @@ class xorc_controller2 {
         return $this->_layoutpath;
     }
 
-    function layout_off() {
+    public function layout_off() {
         $this->_layout_off = 1;
         XorcApp::$inst->nopage = true;
     }
 
-    function auto($layout) {
+    public function auto($layout) {
         if ($this->_layout_off) return false;
         return $this->_layout[$layout];
     }
 
-    function auto_off($layout_part = null) {
+    public function auto_off($layout_part = null) {
         if ($layout_part) $this->_layout[$layout_part] = null;
         else $this->_layout_off = 1;
 
@@ -141,7 +141,7 @@ class xorc_controller2 {
         XorcApp::$inst->nopage = true;
     }
 
-    function theme($theme = -1) {
+    public function theme($theme = -1) {
         if ($theme != -1) {
             $this->_theme = $theme;
             // log_error("#### THEME SET TO #$theme#");
@@ -149,7 +149,7 @@ class xorc_controller2 {
         return $this->_theme;
     }
 
-    function _post_render(&$outp) {
+    public function _post_render(&$outp) {
         if ($this->_post_render) {
             $m = $this->_post_render;
             return $this->$m($outp);
@@ -158,11 +158,11 @@ class xorc_controller2 {
         }
     }
 
-    function require_auth($act) {
+    public function require_auth($act) {
         return false;
     }
 
-    function _check_if_action_is_allowed($action) {
+    public function _check_if_action_is_allowed($action) {
         $action = strtolower($action);
         if (!is_null($this->_enabled_actions)) {
             return in_array($action, explode(' ', $this->_enabled_actions));
