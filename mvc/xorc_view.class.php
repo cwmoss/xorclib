@@ -10,6 +10,7 @@ class Xorc_View {
 
 	public function __construct($basedir = null) {
 		if (!$basedir) $basedir = xorcapp::$inst->base;
+		$this->basedir = $basedir;
 	}
 
 	function render($view = "", $params = []) {
