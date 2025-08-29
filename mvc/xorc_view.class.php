@@ -6,6 +6,12 @@ class Xorc_View {
 	public array $blocks = [];
 	public array $open_blocks = [];
 
+	public $basedir;
+
+	public function __construct($basedir = null) {
+		if (!$basedir) $basedir = xorcapp::$inst->base;
+	}
+
 	function render($view = "", $params = []) {
 		$view = strtolower((string) $view);
 		// XorcApp::$inst->log("[VIEW] $view");
@@ -92,7 +98,7 @@ class Xorc_View {
 		$found = false;
 
 		if ($theme) {
-			$base = XorcApp::$inst->base . "/themes/$theme";
+			$base = $this->basedir . "/themes/$theme";
 
 			if ($direct) {
 				$check = "$base/view/$viewfile";
@@ -112,7 +118,7 @@ class Xorc_View {
 		}
 
 		if (!$found) {
-			$base = XorcApp::$inst->base;
+			$base = $this->basedir;
 			if ($direct) {
 				$check = "$base/view/$viewfile";
 			} else {
@@ -144,7 +150,7 @@ class Xorc_View {
 		$layout = $c->layout();
 		if ($layout) $layout = "_$layout";
 		$path = $c->layout_path();
-		$base = XorcApp::$inst->base;
+		$base = $this->basedir;
 		$theme = $c->theme();
 		if ($theme) $base .= "/themes/$theme/view";
 		else $base .= "/view";
@@ -180,7 +186,7 @@ class Xorc_View {
 		if (XorcApp::$inst->ctrl)
 			$theme = XorcApp::$inst->ctrl->theme();
 		if ($theme && ($rel || $file[0] != "/")) {
-			$file0 = XorcApp::$inst->base . "/themes/$theme/view/$file";
+			$file0 = $this->basedir . "/themes/$theme/view/$file";
 			// log_error("theme view $file0 ?");
 			if (file_exists($file0)) {
 				// log_error("OK.");
@@ -191,7 +197,7 @@ class Xorc_View {
 			}
 		}
 		if (!$theme) {
-			if ($rel || $file[0] != "/") $file = XorcApp::$inst->base . "/view/$file";
+			if ($rel || $file[0] != "/") $file = $this->basedir . "/view/$file";
 		}
 		// log_error("view $file");
 		if (!file_exists($file)) {
