@@ -13,7 +13,12 @@ if (!$name) die("you must provide a theme name.\n") .
    $path = getcwd();
 
 
-$themes = $path . "/src";
+// $themes = $path . "/src";
+$themes = xorcapp::$inst->view->basedir;
+$subdir = "";
+if (str_ends_with(rtrim($themes, "/"), "/src")) {
+   $subdir = "src/";
+}
 
 $dirs = array(
    "$path/public/themes",
@@ -39,7 +44,7 @@ foreach ($dirs as $d) {
 
 $symlinks = array(
    // "$themes/themes/$name/public" => "$path/public/themes/$name",	
-   "../../src/themes/$name/public" => "$path/public/themes/$name",
+   "../../{$subdir}themes/$name/public" => "$path/public/themes/$name",
 );
 
 print ">> making symlinks for theme assets\n";
