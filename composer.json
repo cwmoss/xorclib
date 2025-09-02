@@ -1,13 +1,15 @@
 {
-    "classmap": [
-        "xorcapp.class.php",
-        "xorc.class.php",
-        "mvc/",
-        "db/"
-    ],
-    "files": [
-        "mvc/helper.php"
-    ],
+    "autoload": {
+        "classmap": [
+            "xorcapp.class.php",
+            "xorc.class.php",
+            "mvc/",
+            "db/"
+        ],
+        "files": [
+            "mvc/helper.php"
+        ]
+    },
     "name": "cwmoss/xorclib",
     "type": "library",
     "authors": [
