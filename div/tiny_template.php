@@ -217,7 +217,7 @@ class tiny_template {
                 $bname = $name[0][0];
                 $n = $name[0][1];
                 if ($bname == 'if' || $bname == 'not') {
-                    if (($bname == 'if' && $data[$n]) || ($bname == 'not' && !$data[$n])) $print[] = self::resolve($name[1], $data, $level + 1);
+                    if (($bname == 'if' && ($data[$n] ?? null)) || ($bname == 'not' && !($data[$n] ?? null))) $print[] = self::resolve($name[1], $data, $level + 1);
                     else $print[] = "";
                 } elseif ($bname == 'each') {
                     $out = "";

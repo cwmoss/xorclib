@@ -15,13 +15,23 @@ class Xorcstore_Validation {
    var $low = array();
 
    static $types = array(
-      "acceptance_of", "associated",
-      "confirmation_of", "each", "exclusion_of", "format_of", "inclusion_of",
-      "length_of", "numericality_of", "presence_of", "size_of", "uniqueness_of"
+      "acceptance_of",
+      "associated",
+      "confirmation_of",
+      "each",
+      "exclusion_of",
+      "format_of",
+      "inclusion_of",
+      "length_of",
+      "numericality_of",
+      "presence_of",
+      "size_of",
+      "uniqueness_of"
    );
 
    static $low_types = array(
-      "save" => "validate", "create" => "validate_on_create",
+      "save" => "validate",
+      "create" => "validate_on_create",
       "update" => "validate_on_update"
    );
    static $msg = array(
@@ -165,7 +175,7 @@ class Xorcstore_Validation {
    function validates_presence_of($e, $obj, $col, $opts = array()) {
       $opts = array_merge(array("msg" => self::$msg['empty'], "name" => ucfirst($col)), $opts);
       if (!$this->test_if($e, $obj, $col, $opts)) return true;
-      $v = $obj->$col;
+      $v = (string)$obj->$col;
       if (!trim($v) && trim($v) !== "0") {
          return new Xorcstore_Error($col, sprintf($opts['msg'], $opts['name']));
       }
@@ -174,14 +184,14 @@ class Xorcstore_Validation {
 
    function validates_inclusion_of($e, $obj, $col, $opts = array()) {
       # if(!$obj->attribute_present($col)) return true;
-      $opts = array_merge(array("msg" => self::$msg['inclusion'], "name" => ucfirst($col)), $opts);
+      $opts = array_merge(array("msg" => self::$msg['inclusion'] ?? "", "name" => ucfirst($col)), $opts);
       if (!$this->test_if($e, $obj, $col, $opts)) return true;
       #log_error("one");
       $v = $obj->$col;
-      if ($opts['allow_null'] && is_null($v)) return true;
+      if (($opts['allow_null'] ?? null) && is_null($v)) return true;
       #log_error("two");
-      if ($opts['in']) {
-         if ($opts['ignore_case']) {
+      if ($opts['in'] ?? null) {
+         if ($opts['ignore_case'] ?? null) {
             $v = strtolower($v);
             $in = array_map('strtolower', $opts['in']);
          } else {
@@ -189,7 +199,7 @@ class Xorcstore_Validation {
          }
          if (!in_array($v, $in)) return new Xorcstore_Error($col, sprintf($opts['msg'], $opts['name']));
       }
-      if (($opts['between'] && ($v < $opts['between'][0] || $v > $opts['between'][1]))) {
+      if ((($opts['between'] ?? null) && ($v < $opts['between'][0] || $v > $opts['between'][1]))) {
          # print_r($opts); print "--$v--";print_r($obj);
          return new Xorcstore_Error($col, sprintf($opts['msg'], $opts['name']));
       }
@@ -266,7 +276,8 @@ class Xorcstore_Validation {
    function validates_acceptance_of($e, $obj, $col, $opts = array()) {
       $opts = array_merge(array(
          "msg" => self::$msg['accepted'],
-         'accept' => 1, "name" => ucfirst($col)
+         'accept' => 1,
+         "name" => ucfirst($col)
       ), $opts);
       if (!$this->test_if($e, $obj, $col, $opts)) return true;
       $v = $obj->$col;
