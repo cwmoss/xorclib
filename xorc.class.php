@@ -118,7 +118,7 @@ class Xorc {
 	}
 
 	function use_db($dsn = "", $debug = false, $prefix = "", $ac = null) {
-		define('ADODB_ASSOC_CASE', 0);
+		if (!defined("ADODB_ASSOC_CASE")) define('ADODB_ASSOC_CASE', 0);
 		include_once(__DIR__ . "/db/xorcstore_connector.class.php");
 		if (!$dsn) {
 			$this->connect_db_section('db');
