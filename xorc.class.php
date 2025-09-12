@@ -148,7 +148,7 @@ class Xorc {
 	}
 
 	function use_session($name = "") {
-		if (PHP_SAPI == 'cli') return;
+		// if (PHP_SAPI == 'cli') return;
 		if (!is_array($this->conf['session'] ?? null)) {
 			$this->conf['session'] = [];
 		}
