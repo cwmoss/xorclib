@@ -25,7 +25,7 @@
  * @package xorc
  **/
 
-define('XORC_LIB_PATH', __DIR__);
+if (!defined('XORC_LIB_PATH')) define('XORC_LIB_PATH', __DIR__);
 
 class Xorc {
 
@@ -148,7 +148,7 @@ class Xorc {
 	}
 
 	function use_session($name = "") {
-		#	   if(PHP_SAPI=='cli') return;
+		if (PHP_SAPI == 'cli') return;
 		if (!is_array($this->conf['session'] ?? null)) {
 			$this->conf['session'] = [];
 		}
