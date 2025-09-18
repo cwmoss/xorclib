@@ -88,7 +88,7 @@ function hidden_field_tag($name, $value, $opts = array()) {
    return sprintf(
       '<input type="hidden" name="%s" value="%s" %s />',
       $name,
-      htmlspecialchars($value ?: ""),
+      htmlspecialchars((string) $value),
       opts_to_html($opts)
    );
 }
@@ -144,7 +144,7 @@ function submit_tag($name, $value = null, $opts = array()) {
    return sprintf(
       '<input type="submit" name="%s" value="%s" %s />',
       $name,
-      htmlspecialchars($value),
+      htmlspecialchars((string) $value),
       opts_to_html($opts)
    );
 }
@@ -154,7 +154,7 @@ function button_tag($name, $value = null, $opts = array()) {
    return sprintf(
       '<input type="button" name="%s" value="%s" %s />',
       $name,
-      htmlspecialchars($value),
+      htmlspecialchars((string) $value),
       opts_to_html($opts)
    );
 }
@@ -187,7 +187,7 @@ function text_field_tag($name, $value, $opts = array()) {
       '<input type="%s" name="%s" value="%s" %s />',
       $type,
       $name,
-      htmlspecialchars($value ?: ""),
+      htmlspecialchars((string) $value),
       opts_to_html($opts)
    );
 }
@@ -269,7 +269,7 @@ function opts_to_html($opts) {
       #log_error($v);
       if (!$v && !($v === 0 || $v == "0")) continue;
       #    $html.=' '.$k.'="'.$v.'"';
-      $html .= ' ' . $k . '="' . htmlspecialchars($v) . '"';
+      $html .= ' ' . $k . '="' . htmlspecialchars((string) $v) . '"';
    }
    return $html;
 }
