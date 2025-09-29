@@ -109,7 +109,7 @@ function xorc_exception_handler($e) {
       #log_error("EXCEPTION**** ctrl: ".@get_class($app->ctrl));
       #log_error($trace);
 
-      print($trace);
+      // print($trace);
 
       if (!$app->ctrl) $app->ctrl = new Xorc_Controller;
       if ($opts['vars']) {
