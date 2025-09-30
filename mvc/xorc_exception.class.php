@@ -157,5 +157,8 @@ function xorc_error_handler($errorNumber, $errorString, $errorFile, $errorLine, 
 }
 
 
-#set_error_handler('xorc_error_handler');
-set_exception_handler('xorc_exception_handler');
+# set_error_handler('xorc_error_handler');
+
+// 30.9.2025 wir setzen den handler nicht mehr.
+// alle apps haben eigene handler
+// set_exception_handler('xorc_exception_handler');
