@@ -19,20 +19,44 @@ class xorcstore_assoc implements JsonSerializable {
 	var $relname;
 	var $classname;
 	var $fkey;
+	var $opts = array();
+	var $seq = null;
 
 	var $was_loaded = false;
 	var $owner;
 
 	public static $types = array(
-		'has_many', 'belongs_to', 'has_one', 'has_many_belongs_to_many'
+		'has_many',
+		'belongs_to',
+		'has_one',
+		'has_many_belongs_to_many'
 	);
 
 	function __construct($mclass, $rel, $opts, $owner) {
 		$this->motherclass = $mclass;
 		$this->relname = $rel;
-		$this->fkey = $opts['fkey'];
-		$this->classname = $opts['class'];
-		$this->opts = $opts;
+		$defaults = array(
+			'class' => $rel,
+			'fkey' => null,
+			'class_map' => array(),
+			'class_map_rev' => array(),
+			'dependent' => null,
+			'validate' => true,
+			'position' => null,
+			'finder_sql' => null,
+			'counter_sql' => null,
+			'conditions' => null,
+			'order' => null,
+			'limit' => null,
+			'join_table' => null,
+			'myfkey' => null,
+			'uniq' => false,
+			'fkey_type' => null,
+			'additional_props' => null,
+		);
+		$this->opts = array_merge($defaults, is_array($opts) ? $opts : array());
+		$this->fkey = $this->opts['fkey'];
+		$this->classname = $this->opts['class'];
 		$this->owner = $owner;
 		if ($this->opts['class_map']) {
 			$this->opts['class_map_rev'] = array_flip($this->opts['class_map']);
@@ -61,11 +85,11 @@ class xorcstore_assoc implements JsonSerializable {
 	}
 
 	function type_for_class($obj) {
-		return $this->opts['class_map'][strtolower(get_class($obj))];
+		return $this->opts['class_map'][strtolower(get_class($obj))] ?? null;
 	}
 
 	function class_for_type($type) {
-		return $this->opts['class_map_rev'][strtoupper($type)];
+		return $this->opts['class_map_rev'][strtoupper($type)] ?? null;
 	}
 
 	#[\ReturnTypeWillChange]
@@ -267,7 +291,8 @@ class xorcstore_assoc_has_many extends xorcstore_assoc_collection {
 		if (!$order) $order = $this->seq;
 		log_error("### ORDER: $order");
 		$this->_rs = $o->find(array(
-			'conditions' => $cond, 'limit' => $this->opts['limit'],
+			'conditions' => $cond,
+			'limit' => $this->opts['limit'],
 			'order' => $order
 		));
 		$o->free_memory();
@@ -282,7 +307,7 @@ class xorcstore_assoc_has_many extends xorcstore_assoc_collection {
 		if ($this->opts['finder_sql'])
 			return $o->count_by_any_sql(str_replace("%ID%", $id, $this->opts['finder_sql']));
 
-		$cond = ($opts['conditions']) ? $opts['conditions'] : array($this->fkey => $id);
+		$cond = $this->opts['conditions'] ? $this->opts['conditions'] : array($this->fkey => $id);
 		return $o->count_by_conditions($cond);
 	}
 
@@ -415,7 +440,7 @@ class xorcstore_assoc_has_many_belongs_to_many extends xorcstore_assoc_collectio
 	var $keyQ;
 	var $seq;
 	var $order;
-	
+
 	public $additional_props;
 
 	function __construct($mclass, $rel, $opts, $owner) {
