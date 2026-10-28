@@ -194,13 +194,15 @@ class xorcapp extends Xorc {
                         $this->cL[$pos][0] = $ok;
                     }
                 } else {
+                    $this->log("[APP] NOT FOUND action for {$_SERVER['REQUEST_URI']}");
                     throw new XorcRuntimeException("action for $cont / $act not found.");
                 }
             } else {
+                $this->log("[APP] NOT FOUND controller for {$_SERVER['REQUEST_URI']}");
                 throw new XorcRuntimeException("controller for $cont not found.");
             }
         } catch (XorcControllerForewardException $e) {
-            #   print "ERROR";
+            $this->log("[APP] ForewardException for {$_SERVER['REQUEST_URI']}");
             $this->out .= $this->view->render("/errors/default.html", ["message" => $e->getMessage()]);
             #$this->error($e);
         }
@@ -233,9 +235,11 @@ class xorcapp extends Xorc {
                     // reset
                     [$this->ctrl, $this->ctrl_name, $this->act] = $safe;
                 } else {
+                    $this->log("[APP] SUB NOT FOUND action for {$_SERVER['REQUEST_URI']}");
                     throw new XorcRuntimeException("action for $cont / $act not found.");
                 }
             } else {
+                $this->log("[APP] SUB NOT FOUND controller for {$_SERVER['REQUEST_URI']}");
                 throw new XorcRuntimeException("controller for $cont not found.");
             }
         } catch (Exception $e) {
