@@ -116,7 +116,7 @@ class xorcapp extends Xorc {
             $act = array_pop($caL);
             $cont = join("/", $caL);
         } else {
-            $act = $caL[1];
+            $act = $caL[1] ?? "";
             $cont = $caL[0];
         }
 
@@ -521,7 +521,8 @@ class xorcapp extends Xorc {
 
             $this->_used_controller[$klasn] = &$c;
 
-            return $this->_used_controller[$klasn];
+            $controller = &$this->_used_controller[$klasn];
+            return $controller;
         }
 
         #		log_error("CTRL-LOAD: FAILED");	
