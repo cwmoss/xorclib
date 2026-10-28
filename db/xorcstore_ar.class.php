@@ -900,7 +900,7 @@ class Xorcstore_AR implements Countable, JsonSerializable {
         if (is_string($val) && ctype_digit($val)) {
             return $val;
         }
-        if (is_string($val) && $val[0]=="-" && ctype_digit(substr($val, 1))) {
+        if (is_string($val) && $val[0] == "-" && ctype_digit(substr($val, 1))) {
             return $val;
         }
 
@@ -2032,7 +2032,7 @@ class Xorcstore_AR implements Countable, JsonSerializable {
             #		print_r($rsC);
             # print_r($RS->fields);
             #	   $data=array_shift($RS->fields);
-            $fa = $rsC[0] ? explode(",", $rsC[0]): [];
+            $fa = $rsC[0] ? explode(",", $rsC[0]) : [];
             #		print_r(sizeof($fa));
             if (strlen($fa[0]) === 0) {
                 $rL[0] = $RS->fields[$selop];
@@ -2156,7 +2156,7 @@ class Xorcstore_AR implements Countable, JsonSerializable {
             return array();
         }
         // guess table name
-        include_once("xorc/div/naming.class.php");
+        include_once(__DIR__ . "/../div/naming.class.php");
         $n = new Naming;
         return array("table" => $n->plural($klas));
     }

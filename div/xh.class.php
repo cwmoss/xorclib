@@ -7,7 +7,7 @@
 class XH {
 
 
-	function countrycodes($lang = "de", $max = 24, $sort = true) {
+	static public function countrycodes($lang = "de", $max = 24, $sort = true) {
 		$ccL = array();
 		$cc = parse_ini_file(dirname(__FILE__) . "/country-iso3166-{$lang}.ini");
 		foreach ($cc as $c => $v) {
@@ -22,7 +22,7 @@ class XH {
 		if ($sort) asort($cc, SORT_LOCALE_STRING);
 		return $cc;
 	}
-	function countrycodes_spec($lang = "de", $max = 24, $sort = true) {
+	static public function countrycodes_spec($lang = "de", $max = 24, $sort = true) {
 		$ccL = array();
 		$cc = parse_ini_file(dirname(__FILE__) . "/country-iso3166-{$lang}.ini");
 		foreach ($cc as $c => $v) {
@@ -45,14 +45,14 @@ class XH {
 		return ($d + $cc);
 	}
 
-	function countrycodes_utf8($lang = "de", $max = 24, $sort = true) {
+	static public function countrycodes_utf8($lang = "de", $max = 24, $sort = true) {
 		$codes = self::countrycodes($lang, $max, $sort);
 		foreach ($codes as $key => $code)
 			$codes[$key] = isowintoutf8($code);
 		return $codes;
 	}
 
-	function langcodes($lang = "de", $max = 24, $sort = true) {
+	static public function langcodes($lang = "de", $max = 24, $sort = true) {
 		$lcL = array();
 		$lc = parse_ini_file(dirname(__FILE__) . "/lang-iso639-1-{$lang}.ini");
 		foreach ($lc as $c => $v) {
@@ -67,7 +67,7 @@ class XH {
 		return $lc;
 	}
 
-	function alpharegister($url = "", $pos = "", $addparms = array(), $step = 1, $noalpha = 1) {
+	static public function alpharegister($url = "", $pos = "", $addparms = array(), $step = 1, $noalpha = 1) {
 		if (!$url) $url = $_SERVER['PHP_SELF'];
 		if (!$pos) $pos = $_GET['alphareg'];
 		if (!$pos) $pos = $_POST['alphareg'];
@@ -103,7 +103,7 @@ class XH {
 		return $reg;
 	}
 
-	function alpharegister_sql($pos, $field) {
+	static public function alpharegister_sql($pos, $field) {
 		switch ($pos) {
 			case '-':
 				$char = '^a-zäöü';
@@ -128,7 +128,7 @@ class XH {
 		return $regex;
 	}
 
-	function pager($pager, $url = "", $addparms = array(), $slide = 6) {
+	static public function pager($pager, $url = "", $addparms = array(), $slide = 6) {
 		if (!$url) $url = $_SERVER['PHP_SELF'];
 		$parms = XH::url("", $addparms);
 		if ($parms) $parms = "&$parms";
@@ -169,7 +169,7 @@ class XH {
 		return $html;
 	}
 
-	function url($url, $parms = array()) {
+	static public function url($url, $parms = array()) {
 		$p = array();
 		if ($parms) {
 			foreach ($parms as $k => $v) {
