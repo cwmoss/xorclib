@@ -2096,7 +2096,7 @@ class Xorcstore_AR implements Countable, JsonSerializable {
         static $con;
         if ($clear) {
             $con = null;
-            return;
+            return $con;
         }
         if (!$db) {
             $db = xorcstore_reflection::database($this);
