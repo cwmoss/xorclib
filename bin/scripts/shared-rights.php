@@ -4,10 +4,10 @@
 */
 $usergroup = $margs[0];
 
-if(!$usergroup){
-	$guess = trim(`ps aux | grep -E '[a]pache|[h]ttpd|[_]www|[w]ww-data|[n]ginx' | grep -v root | head -1 | cut -d\  -f1`);
+if (!$usergroup) {
+	$guess = trim(shell_exec("ps aux | grep -E '[a]pache|[h]ttpd|[_]www|[w]ww-data|[n]ginx' | grep -v root | head -1 | cut -d\\  -f1"));
 
-    print "please give a user:group
+	print "please give a user:group
 	optional: path
 
 	osx add user to group: sudo dseditgroup -o edit -a USERNAME -t user GROUPNAME
@@ -24,7 +24,7 @@ if(!$usergroup){
 
 
 $dirs = $margs[1];
-if(!$dirs) $dirs = array('var');
+if (!$dirs) $dirs = array('var');
 else $dirs = array($dirs);
 
 /*
@@ -41,19 +41,19 @@ sudo find storage -type d -exec chmod 2770 {} \;
 find var/generation -type d -exec chmod g+s {} \;
 */
 
-foreach($dirs as $d){
+foreach ($dirs as $d) {
 
 	$dirname = $d;
-	if(!file_exists($dirname)) $dirname = Xorcapp::$inst->approot."/$d";
+	if (!file_exists($dirname)) $dirname = Xorcapp::$inst->approot . "/$d";
 
 	print "setting file/dir owner/permissions [$usergroup]for $dirname\n";
 
 	// user + gruppe setzen
-	`sudo chown -R $usergroup $dirname`;
+	shell_exec('sudo chown -R ' . escapeshellarg($usergroup) . ' ' . escapeshellarg($dirname));
 
 	// verzeichnisse mit "setgid bit"
-	`sudo find $dirname -type d -exec chmod 2770 {} \;`;
+	shell_exec('sudo find ' . escapeshellarg($dirname) . ' -type d -exec chmod 2770 {} \\;');
 
 	// vorhandene dateien
-	`sudo find $dirname -type f -exec chmod 0660 {} \;`;
+	shell_exec('sudo find ' . escapeshellarg($dirname) . ' -type f -exec chmod 0660 {} \\;');
 }

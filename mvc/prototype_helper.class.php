@@ -1,149 +1,158 @@
 <?php
 
-class Prototype_helper{
+class Prototype_helper {
 
-   public $_js="";
-   public $_divid="";
-   public $_el;
-   public $iframe=false;
+  public $_js = "";
+  public $_divid = "";
+  public $_el;
+  public $iframe = false;
 
-   function __construct(){
-      $this->iframe=$_GET['xorciframe'];
-      if(!$this->iframe) header("Content-Type: text/javascript");
-   }
+  function __construct() {
+    $this->iframe = $_GET['xorciframe'] ?? false;
+    if (!$this->iframe) header("Content-Type: text/javascript");
+  }
 
-   function replace_html($id, $html){
-      $this->element_do("update(\"".escape_js($html)."\")", $id);
-   }
+  function replace_html($id, $html) {
+    $this->element_do("update(\"" . escape_js($html) . "\")", $id);
+  }
 
-   function hide($ids="-"){
-      XorcApp::$inst->log("HIDE $ids");
-      $this->element_do("hide()", $ids);
-   }
+  function hide($ids = "-") {
+    XorcApp::$inst->log("HIDE $ids");
+    $this->element_do("hide()", $ids);
+  }
 
-   function show($ids){
-      $this->element_do("show()", $ids);
-   }
+  function show($ids) {
+    $this->element_do("show()", $ids);
+  }
 
-   function toggle($ids){
-      $this->element_do("toggle()", $ids);
-   }
+  function toggle($ids) {
+    $this->element_do("toggle()", $ids);
+  }
 
-   function remove_class($ids, $clas){
-      $this->element_do("removeClassName('$clas')", $ids);
-   }
+  function remove_class($ids, $clas) {
+    $this->element_do("removeClassName('$clas')", $ids);
+  }
 
-   function add_class($ids, $clas){
-      $this->element_do("addClassName('$clas')", $ids);
-   }
+  function add_class($ids, $clas) {
+    $this->element_do("addClassName('$clas')", $ids);
+  }
 
-   function element_do($sth, $ids="-"){
-      if($ids=='-'){
-         $this->_js.="el.$sth;\n";
-      }else{
-         if(!is_array($ids)) $ids=[$ids];
-         foreach($ids as $id){
-            $this->_js.="\$('$id').$sth;\n";
-         }
+  function element_do($sth, $ids = "-") {
+    if ($ids == '-') {
+      $this->_js .= "el.$sth;\n";
+    } else {
+      if (!is_array($ids)) $ids = [$ids];
+      foreach ($ids as $id) {
+        $this->_js .= "\$('$id').$sth;\n";
       }
-   }
+    }
+  }
 
-   function effect($name, $id, $opts=[]){
-      if($id=="-") $id="el";
-      else $id="'$id'";
-      $this->_js.="new Effect.".ucfirst((string) $name)."($id, ".js_options($opts).");\n";
-   }
+  function effect($name, $id, $opts = []) {
+    if ($id == "-") $id = "el";
+    else $id = "'$id'";
+    $this->_js .= "new Effect." . ucfirst((string) $name) . "($id, " . js_options($opts) . ");\n";
+  }
 
-   function redirect($url){
-      $this->_js.="window.location.href='".url($url)."';\n";
-   }
+  function redirect($url) {
+    $this->_js .= "window.location.href='" . url($url) . "';\n";
+  }
 
-   function alert($html){
-      $this->_js.="alert('".escape_js($html)."');\n";
-   }
+  function alert($html) {
+    $this->_js .= "alert('" . escape_js($html) . "');\n";
+  }
 
-   function select($q){
-      $e=new Prototype_helper_Element;
-      $e->mother=$this;
-      $e->id="-";
-      $e->_js="\$\$('$q')";
-      return $e;
-   }
+  function select($q) {
+    $e = new Prototype_helper_Element;
+    $e->mother = $this;
+    $e->id = "-";
+    $e->_js = "\$\$('$q')";
+    return $e;
+  }
 
-   function cmd($js){
-      $this->_js.=$js."\n";
-   }
+  function cmd($js) {
+    $this->_js .= $js . "\n";
+  }
 
-   function send(){
-      print $this->return_string();
-   }
+  function send() {
+    print $this->return_string();
+  }
 
-   function return_string(){
-      $pfx=$sfx="";
-      if($this->iframe){
-         $pfx="<html><head></head><body><script>\nwith(parent){\n";
-         $sfx="}\n</script></body></html>";
-      }
-      return sprintf("%stry{\n%s\n} catch(e){ alert(%s);\n alert('%s');\n throw e;}\n%s",
-         $pfx,
-         $this->_js, "'PJS error:\\n\\n' + e.toString()", escape_js($this->_js),
-         $sfx);
-   }
+  function return_string() {
+    $pfx = $sfx = "";
+    if ($this->iframe) {
+      $pfx = "<html><head></head><body><script>\nwith(parent){\n";
+      $sfx = "}\n</script></body></html>";
+    }
+    return sprintf(
+      "%stry{\n%s\n} catch(e){ alert(%s);\n alert('%s');\n throw e;}\n%s",
+      $pfx,
+      $this->_js,
+      "'PJS error:\\n\\n' + e.toString()",
+      escape_js($this->_js),
+      $sfx
+    );
+  }
 
-   function _lastdiv($div=null){
-      static $id;
-      if($div===null) return $id;
-      $id=$div;
-   }
+  function _lastdiv($div = null) {
+    static $id;
+    if ($div === null) return $id;
+    $id = $div;
+  }
 
-   function __get($m){
-      XorcApp::$inst->log("__GET $m");
-      $e=new Prototype_helper_Element;
-      $e->mother=$this;
-      $e->id=$m;
-      return $e;
-      // print_r(func_get_args());
-      // call_user_func_array(array($this, $m), $args);
-   }
+  function __get($m) {
+    XorcApp::$inst->log("__GET $m");
+    $e = new Prototype_helper_Element;
+    $e->mother = $this;
+    $e->id = $m;
+    return $e;
+    // print_r(func_get_args());
+    // call_user_func_array(array($this, $m), $args);
+  }
 
-   function __call($m, $args){
-      XorcApp::$inst->log("__CALL $m".var_export($args, true));
-      array_unshift($args, $m); 
-      call_user_func_array($this->effect(...), $args);
-   }
+  function __call($m, $args) {
+    XorcApp::$inst->log("__CALL $m" . var_export($args, true));
+    array_unshift($args, $m);
+    call_user_func_array($this->effect(...), $args);
+  }
 }
 
-class Prototype_helper_Element implements Iterator{
-   public $mother=false;
-   public $id='-';
-   public $_els=[];
-   public $_js;
-   public $run=true;
+class Prototype_helper_Element implements Iterator {
+  public $mother = false;
+  public $id = '-';
+  public $_els = [];
+  public $_js;
+  public $run = true;
 
-   function __call($m, $args=[]){
-      XorcApp::$inst->log("PTID__CALL $m: ".var_export($args, true));
-      array_unshift($args, $this->id); 
-      call_user_func_array([&$this->mother, $m], $args);
-   }
+  function __call($m, $args = []) {
+    XorcApp::$inst->log("PTID__CALL $m: " . var_export($args, true));
+    array_unshift($args, $this->id);
+    call_user_func_array([&$this->mother, $m], $args);
+  }
 
-   public function rewind(){
-      XorcApp::$inst->log("REWIND");
-      $this->id='-';
-      $this->run=true;
-      $this->mother->cmd($this->_js.".each(function(el){");
-   }
+  public function rewind() {
+    XorcApp::$inst->log("REWIND");
+    $this->id = '-';
+    $this->run = true;
+    $this->mother->cmd($this->_js . ".each(function(el){");
+  }
 
-   public function current(){return $this;}
+  public function current() {
+    return $this;
+  }
 
-   public function key(){return "dummy";}
+  public function key() {
+    return "dummy";
+  }
 
-   public function next(){
-      $this->run=!$this->run;
-      $this->mother->cmd("})");
-   }
+  public function next() {
+    $this->run = !$this->run;
+    $this->mother->cmd("})");
+  }
 
-   public function valid(){return $this->run;}
-
+  public function valid() {
+    return $this->run;
+  }
 }
 
 
@@ -380,5 +389,3 @@ module GeneratorMethods
         end
       end
 */
-
-?>

@@ -22,9 +22,9 @@ class Xorc_Env {
 		if (!$this->server) $this->server = $_SERVER['HTTP_HOST'] ?? 'localhost';
 
 		if (isset($conf['urlrewrite']) && $conf['urlrewrite']) {
-			$this->httpbase = dirname($_SERVER['SCRIPT_NAME']);
+			$this->httpbase = dirname($_SERVER['SCRIPT_NAME'] ?? '');
 		} else {
-			$this->httpbase = $_SERVER['SCRIPT_NAME'];
+			$this->httpbase = $_SERVER['SCRIPT_NAME'] ?? '';
 		}
 		if ($this->httpbase == "/") $this->httpbase = "";
 		$this->actionbase = isset($conf['noprefix']) ? "" : $this->httpbase;

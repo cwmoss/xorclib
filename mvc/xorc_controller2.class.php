@@ -106,7 +106,7 @@ class xorc_controller2 {
     }
 
     public function redirect_referer() {
-        $to = $_SERVER['HTTP_REFERER'];
+        $to = $_SERVER['HTTP_REFERER'] ?? "/";
         XorcApp::$inst->resp->redirect($to);
     }
 

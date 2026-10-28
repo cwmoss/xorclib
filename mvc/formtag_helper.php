@@ -275,29 +275,29 @@ function opts_to_html($opts) {
 }
 
 function upload_file_to_hash($name) {
-   $phpname = $_FILES[$name];
-   if ($phpname['error'] != UPLOAD_ERR_OK) return false;
-   if (!$phpname['tmp_name']) return false;
+   $phpname = $_FILES[$name] ?? array();
+   if (($phpname['error'] ?? UPLOAD_ERR_NO_FILE) != UPLOAD_ERR_OK) return false;
+   if (empty($phpname['tmp_name'])) return false;
 
    $upload = array(
-      'remote' => $phpname['name'],
-      'type'   => $phpname['type'],
-      'size'   => $phpname['size'],
+      'remote' => $phpname['name'] ?? '',
+      'type'   => $phpname['type'] ?? '',
+      'size'   => $phpname['size'] ?? 0,
       'tmp'    => $phpname['tmp_name']
    );
    return $upload;
 }
 
 function upload_to_hash($name) {
-   $phpname = $_FILES[$name];
+   $phpname = $_FILES[$name] ?? array();
 
    $upload = array(
-      'error' => $phpname['error'],
-      'remote' => $phpname['name'],
-      'type'   => $phpname['type'],
-      'size'   => $phpname['size'],
-      'tmp'    => $phpname['tmp_name'],
-      'tmp_name'    => $phpname['tmp_name'],
+      'error' => $phpname['error'] ?? UPLOAD_ERR_NO_FILE,
+      'remote' => $phpname['name'] ?? '',
+      'type'   => $phpname['type'] ?? '',
+      'size'   => $phpname['size'] ?? 0,
+      'tmp'    => $phpname['tmp_name'] ?? '',
+      'tmp_name'    => $phpname['tmp_name'] ?? '',
    );
    return $upload;
 }

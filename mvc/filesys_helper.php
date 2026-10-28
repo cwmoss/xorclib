@@ -80,7 +80,7 @@ function xorc_mime_type($file) {
    if (!file_exists($file) || !(is_file($file) && is_readable($file)))
       return false;
    $file = escapeshellarg($file);
-   $t = `file -bi $file`;
+   $t = shell_exec('file -bi ' . $file);
    if (!$t) $t = "application/ocet-stream";
    $t = explode(';', $t);
    return $t[0];

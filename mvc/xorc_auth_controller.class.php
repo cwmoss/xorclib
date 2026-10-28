@@ -92,6 +92,13 @@ class Xorc_Auth_Controller extends Xorc_Controller {
 			'allow_rememberme' => false,
 			'persistent_cookie_name' => 'default_cookie_name',
 			'persistent_cookie_lifetime' => 1,
+			'allow_local_access' => false,
+			'erase' => false,
+			'mvc' => null,
+			'redirect_uri' => false,
+			'redirect_get' => false,
+			'redirect_referer' => false,
+			'redirect_server' => false,
 		);
 
 		// first call
@@ -108,11 +115,11 @@ class Xorc_Auth_Controller extends Xorc_Controller {
 		#log_error($this->conf);
 
 		// lokale (anonyme) zugriffe erlauben
-		if (($this->conf['allow_local_access'] ?? false) && ($_SERVER["SERVER_ADDR"] == $_SERVER["REMOTE_ADDR"])) {
+		if (($this->conf['allow_local_access'] ?? false) && (($_SERVER["SERVER_ADDR"] ?? null) == ($_SERVER["REMOTE_ADDR"] ?? null))) {
 			return true;
 		}
 		// welche seite wollte ich ursprünglich sehen?
-		if ($_SERVER['REQUEST_METHOD'] == 'GET' && !($this->sess->referer ?? null)) {
+		if (($_SERVER['REQUEST_METHOD'] ?? '') == 'GET' && !($this->sess->referer ?? null)) {
 			$this->sess->referer = $_SERVER['REDIRECT_SCRIPT_URL'] ?? null;
 		}
 
@@ -181,10 +188,10 @@ class Xorc_Auth_Controller extends Xorc_Controller {
 			} else {
 				$this->sess->state = 0;
 				if ($soft) return false;
-				if (($this->conf['erase'] ?? null) && $_SERVER["REQUEST_METHOD"] != "POST") $this->soft_logout();
+				if (($this->conf['erase'] ?? null) && ($_SERVER["REQUEST_METHOD"] ?? '') != "POST") $this->soft_logout();
 
 				#print_r($_SERVER);
-				if ($_SERVER["REQUEST_METHOD"] == "POST") {
+				if (($_SERVER["REQUEST_METHOD"] ?? '') == "POST") {
 					$this->_failed_credentials();
 				} else {
 					$this->_authentification_required();
@@ -210,7 +217,7 @@ class Xorc_Auth_Controller extends Xorc_Controller {
 	}
 
 	function get_rememberme() {
-		if ($this->conf['allow_rememberme']) $remember = $_COOKIE[$this->conf['persistent_cookie_name']];
+		if ($this->conf['allow_rememberme']) $remember = $_COOKIE[$this->conf['persistent_cookie_name']] ?? "";
 		else $remember = "";
 		return $remember;
 	}
@@ -281,7 +288,7 @@ class Xorc_Auth_Controller extends Xorc_Controller {
 		//	right after the correct posting of auth infos
 		//	we do an redirect to prevent second postings
 		if ($this->conf['redirect_uri']) {
-			$redir = $_SERVER['REDIRECT_URL'];
+			$redir = $_SERVER['REDIRECT_URL'] ?? "/";
 			$params = null;
 			if ($this->conf['redirect_get']) {
 				$params = $_GET;
@@ -290,10 +297,10 @@ class Xorc_Auth_Controller extends Xorc_Controller {
 			// log_error($params);
 			$this->redirect($redir, $params);
 		} elseif ($this->conf['redirect_referer']) {
-			$redir = $_SERVER['HTTP_REFERER'];
+			$redir = $_SERVER['HTTP_REFERER'] ?? "/";
 			$this->redirect($redir);
 		} elseif ($this->conf['redirect_server']) {
-			$redir = $_SERVER[$this->conf['redirect_server']];
+			$redir = $_SERVER[$this->conf['redirect_server']] ?? "/";
 			$this->redirect($redir);
 		} else {
 			// log_error("AUTH-OK-REDIRECT");
@@ -312,7 +319,7 @@ class Xorc_Auth_Controller extends Xorc_Controller {
 	}
 
 	function _fetch_auth_id_from_login() {
-		return $_REQUEST['xorcuser'];
+		return $_REQUEST['xorcuser'] ?? null;
 	}
 
 	function _additional_checks() {

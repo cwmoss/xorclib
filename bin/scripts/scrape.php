@@ -110,7 +110,7 @@ try {
       $dest = "$VAR/layouts/$name/_layout.page.html";
       $destdir = dirname($dest);
       if (!(file_exists($destdir) && is_dir($destdir))) {
-         `mkdir $destdir`;
+         shell_exec('mkdir ' . escapeshellarg($destdir));
       }
    }
 

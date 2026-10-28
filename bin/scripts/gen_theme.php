@@ -51,5 +51,5 @@ print ">> making symlinks for theme assets\n";
 
 foreach ($symlinks as $src => $dest) {
    if (!file_exists($dest))
-      `ln -sf $src $dest`;
+      shell_exec('ln -sf ' . escapeshellarg($src) . ' ' . escapeshellarg($dest));
 }

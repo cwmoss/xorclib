@@ -14,7 +14,7 @@ class Xorc_Request {
 		#		log_error("REQ-CLASS: ".$_SERVER['SCRIPT_NAME']."--".$_SERVER['REQUEST_URI']);
 		if (xorcapp::$inst->conf['general']['urlrewrite'] ?? null) {
 			$path = str_replace(
-				dirname($_SERVER['SCRIPT_NAME']) . "/",
+				dirname($_SERVER['SCRIPT_NAME'] ?? '') . "/",
 				"",
 				(string) ($_SERVER['REQUEST_URI'] ?? "")
 			);

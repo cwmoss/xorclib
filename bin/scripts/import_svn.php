@@ -26,34 +26,36 @@
    
 */
 
-$repo=$margs[0];
-if(!$repo) $repo = xorc_ini("svn.url");
-if(!$repo) die("please provide svn repository.\n");
+$repo = $margs[0];
+if (!$repo) $repo = xorc_ini("svn.url");
+if (!$repo) die("please provide svn repository.\n");
 
-$name=strtolower(get_class(Xorcapp::$inst));
+$name = strtolower(get_class(Xorcapp::$inst));
 
-$dir=array(
-   "public", "src", "doc", "bin", "conf", "db", "lib/$name"
-   );
+$dir = array(
+   "public",
+   "src",
+   "doc",
+   "bin",
+   "conf",
+   "db",
+   "lib/$name"
+);
 
-`mv conf/{$name}_dev.ini conf/{$name}_dist.ini`;
-`mv public/.htaccess conf/dot.htaccess`;
+shell_exec('mv ' . escapeshellarg("conf/{$name}_dev.ini") . ' ' . escapeshellarg("conf/{$name}_dist.ini"));
+shell_exec('mv public/.htaccess conf/dot.htaccess');
 
-foreach($dir as $d){
-   `svn import -m 'import first version' $d $repo/trunk/$d`;
+foreach ($dir as $d) {
+   shell_exec('svn import -m ' . escapeshellarg('import first version') . ' ' . escapeshellarg($d) . ' ' . escapeshellarg("$repo/trunk/$d"));
 }
 
-`mkdir before-import`;
+shell_exec('mkdir before-import');
 
-$dirs=join(" ", $dir);
+$dirs = join(" ", $dir);
 
-`mv public src doc bin conf db lib before-import`;
+shell_exec('mv public src doc bin conf db lib before-import');
 
-`svn co $repo/trunk/ ./`;
+shell_exec('svn co ' . escapeshellarg("$repo/trunk/") . ' ./');
 
-`cp conf/{$name}_dist.ini conf/{$name}_dev.ini`;
-`cp conf/dot.htaccess public/.htaccess`;
-
-
-
-?>
+shell_exec('cp ' . escapeshellarg("conf/{$name}_dist.ini") . ' ' . escapeshellarg("conf/{$name}_dev.ini"));
+shell_exec('cp conf/dot.htaccess public/.htaccess');

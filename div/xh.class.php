@@ -68,9 +68,9 @@ class XH {
 	}
 
 	static public function alpharegister($url = "", $pos = "", $addparms = array(), $step = 1, $noalpha = 1) {
-		if (!$url) $url = $_SERVER['PHP_SELF'];
-		if (!$pos) $pos = $_GET['alphareg'];
-		if (!$pos) $pos = $_POST['alphareg'];
+		if (!$url) $url = $_SERVER['PHP_SELF'] ?? '';
+		if (!$pos) $pos = $_GET['alphareg'] ?? '';
+		if (!$pos) $pos = $_POST['alphareg'] ?? '';
 		$reg = "";
 		$parms = XH::url("", $addparms);
 		if ($parms) $parms = "&$parms";
@@ -129,7 +129,7 @@ class XH {
 	}
 
 	static public function pager($pager, $url = "", $addparms = array(), $slide = 6) {
-		if (!$url) $url = $_SERVER['PHP_SELF'];
+		if (!$url) $url = $_SERVER['PHP_SELF'] ?? '';
 		$parms = XH::url("", $addparms);
 		if ($parms) $parms = "&$parms";
 
