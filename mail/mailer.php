@@ -50,15 +50,28 @@ class mailer{
    	   	$transport = new \Swift_SmtpTransport($cred['host'], $cred['port']?$cred['port']:25);
    	   }
 
-	if($cred['user']) $transport->setUsername($cred['user'])
-   	      ->setPassword($cred['pass'])
-   	      // ->setPort(465)
-            ->setEncryption('ssl')
-   	      ;
+    if($cred['user']) {
+    	$transport->setUsername($cred['user'])
+    	          ->setPassword($cred['pass']);
 
-   	   if(self::$conf['ssl']){
-   	   	$transport->setEncryption('ssl');
-   	   }
+    	$port = $cred['port'] ? $cred['port'] : 25;
+
+    	// If SSL/TLS is requested in config, choose appropriate mode:
+    	// - port 465 -> implicit SSL
+    	// - other ports (eg. 587) -> STARTTLS/TLS
+    	if (isset(self::$conf['ssl']) && self::$conf['ssl']) {
+    		if ($port == 465) {
+    			$transport->setEncryption('ssl');
+    		} else {
+    			$transport->setEncryption('tls');
+    		}
+    	} else {
+    		// No explicit config: infer from port
+    		if ($port == 465) {
+    			$transport->setEncryption('ssl');
+    		}
+    	}
+    }
 
    	   if(self::$conf['ssl_nocert']){
    	   	$transport->setStreamOptions(array('ssl' => array('allow_self_signed' => true, 'verify_peer' => false)));
