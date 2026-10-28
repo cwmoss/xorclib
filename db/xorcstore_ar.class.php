@@ -179,7 +179,6 @@ class Xorcstore_AR implements Countable, JsonSerializable {
     public function delete_relations() {
         #  var_dump($this->_assoc);
         foreach (xorcstore_reflection::assocs($this) as $rel => $opts) {
-            $type = $r[0];
             #			print_r($this);
             #		print "REMOVING $rel\n";
             #print_r($this->_assoc[$rel]);
@@ -336,22 +335,22 @@ class Xorcstore_AR implements Countable, JsonSerializable {
                 $joins = array($joins);
             }
             foreach ($joins as $k => $j) {
-                if ($j['type']) {
+                if ($j['type'] ?? null) {
                     $jtype = $j['type'];
                 } else {
                     $jtype = "JOIN";
                 }
-                if ($j['conditions']) {
+                if ($j['conditions'] ?? null) {
                     $jon = "ON ({$j['conditions']})";
                 } else {
                     $jon = "";
                 }
-                if ($j['in_result']) {
+                if (!empty($j['in_result'])) {
                     $sel = "j{$k}.*, " . $sel;
                 }
                 #      $tabL[]=$j['table']." j$k";
                 $tabL[] = "$jtype {$j['table']} j$k $jon";
-                $_jcond = $this->condition_to_sql(".j" . $k, $j['jconds'], $tf);
+                $_jcond = $this->condition_to_sql(".j" . $k, $j['jconds'] ?? null, $tf);
                 if ($_jcond) {
                     $jcondL[] = $_jcond;
                 }

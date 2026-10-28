@@ -140,6 +140,7 @@ class Xorc_Router {
 		#log_error($params);
 
 		$url = "";
+		$http = "";
 		$raute = "";
 		$host = "";
 		//		print "$action~";
@@ -207,6 +208,7 @@ class Xorc_Router {
 		} else {
 			$http = array();
 			foreach ($params as $k => $v) {
+				$v = $v ?? "";
 				$url2 = str_replace('$' . $k, $v, $url);
 				if ($url2 == $url) $http[] = urlencode($k) . "=" . urlencode($v);
 				else $url = $url2;
