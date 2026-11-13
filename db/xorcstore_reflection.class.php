@@ -44,7 +44,7 @@ class xorcstore_reflection {
 	}
 
 	static function column_exists($o, $c) {
-		return isset(self::$r[$o->klas]['fields'][$c]);
+		return isset(self::$r[(string)$o->klas]['fields'][$c]);
 	}
 
 	static function type_of($o, $c) {
